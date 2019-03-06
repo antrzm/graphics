@@ -17,8 +17,8 @@ public class MainFrame extends JFrame {
 
     private MainFrame() {
         try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {
         }
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -134,7 +134,7 @@ public class MainFrame extends JFrame {
             return menuBar;
     }
 
-    public MenuElement getMenuElement(String menuPath) {
+    private MenuElement getMenuElement(String menuPath) {
         MenuElement element = menuBar;
         for (String pathElement : menuPath.split("/")) {
             MenuElement newElement = null;
@@ -165,14 +165,14 @@ public class MainFrame extends JFrame {
         return button;
     }
 
-    public JButton createToolBarButton(String menuPath, String icon) {
+    private JButton createToolBarButton(String menuPath, String icon) {
         JMenuItem item = (JMenuItem) getMenuElement(menuPath);
         if (item == null)
             throw new InvalidParameterException("Menu path not found: " + menuPath);
         return createToolBarButton(item, icon);
     }
 
-    public void addToolBarButton(String menuPath, String icon) {
+    protected void addToolBarButton(String menuPath, String icon) {
         toolBar.add(createToolBarButton(menuPath, icon));
     }
 
@@ -181,7 +181,7 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void addToolBarSeparator() {
+    protected void addToolBarSeparator() {
         toolBar.addSeparator();
     }
 

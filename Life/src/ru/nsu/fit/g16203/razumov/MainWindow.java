@@ -102,7 +102,8 @@ public class MainWindow extends MainFrame {
         hexagonGrid.setXorMode();
     }
 
-    public void onImpact() {   //TODO
+    public void onImpact() {
+        hexagonGrid.showImpact();
     }
 
     public void onColors() {   //TODO
@@ -112,11 +113,15 @@ public class MainWindow extends MainFrame {
         hexagonGrid.init();
     }
 
-    public void onNext() {   //TODO
+    public void onNext() {
+        if (!status.getText().equals("Running..."))
+            hexagonGrid.nextStep();
     }
 
-    public void onRun() {   //TODO
-        status.setText("Running...");
+    public void onRun() {
+        if (status.getText().equals("Running...")) status.setText("Paused");
+        else status.setText("Running...");
+        hexagonGrid.switchRun();
     }
 
     public void onToolBar() {   //TODO

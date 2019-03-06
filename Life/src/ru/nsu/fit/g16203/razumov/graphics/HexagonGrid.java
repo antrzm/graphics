@@ -6,6 +6,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class HexagonGrid extends JPanel {
 
@@ -15,11 +22,13 @@ public class HexagonGrid extends JPanel {
     static final int ALIVE_COLOR = Color.GREEN.getRGB();
 
     private boolean replaceMode;
+    private boolean isImpactShown;
+
     private Hexagon prevHex;
 
+    private boolean isRunning;
 
     private Hexagon[][] grid;
-    private Point[][] centers;
 
     private int n, m;
 
@@ -27,12 +36,14 @@ public class HexagonGrid extends JPanel {
 
     public HexagonGrid(int n, int m) {
         grid = new Hexagon[n][m];
-        centers = new Point[n][m];
+        Point[][] centers = new Point[n][m];
 
         this.n = n;
         this.m = m;
 
         replaceMode = true;
+        isImpactShown = false;
+        isRunning = false;
         prevHex = null;
 
         image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
@@ -43,8 +54,9 @@ public class HexagonGrid extends JPanel {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
+                if (i == n - 1 && j % 2 != 0) continue;
                 centers[i][j] = new Point();
-                grid[i][j] = new Hexagon(i, j, image, centers);
+                grid[i][j] = new Hexagon(i, j, image, centers, grid);
             }
         }
 
@@ -56,12 +68,11 @@ public class HexagonGrid extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null) {
-                    if (replaceMode && hex.currentColor == BACKGROUND_COLOR)
-                        hex.spanSelf(ALIVE_COLOR);
-                    else if (!replaceMode && hex.currentColor == BACKGROUND_COLOR)
-                        hex.spanSelf(ALIVE_COLOR);
-                    else if (!replaceMode && hex.currentColor == ALIVE_COLOR)
-                        hex.spanSelf(BACKGROUND_COLOR);
+                    if (hex.isDead) {
+                        hex.setAlive(isImpactShown);
+                    } else if (!replaceMode) {
+                        hex.setDead(isImpactShown);
+                    }
                     repaint();
                 }
             }
@@ -72,12 +83,13 @@ public class HexagonGrid extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null && hex != prevHex) {
-                    if (replaceMode && hex.currentColor == BACKGROUND_COLOR)
-                        hex.spanSelf(ALIVE_COLOR);
-                    else if (!replaceMode && hex.currentColor == BACKGROUND_COLOR)
-                        hex.spanSelf(ALIVE_COLOR);
-                    else if (!replaceMode && hex.currentColor == ALIVE_COLOR)
-                        hex.spanSelf(BACKGROUND_COLOR);
+                    if (replaceMode && hex.isDead) {
+                        hex.setAlive(isImpactShown);
+                    } else if (!replaceMode && !hex.isDead) {
+                        hex.setDead(isImpactShown);
+                    } else if (!replaceMode && hex.isDead) {
+                        hex.setAlive(isImpactShown);
+                    }
                     prevHex = hex;
                     repaint();
                 }
@@ -87,30 +99,42 @@ public class HexagonGrid extends JPanel {
             public void mouseMoved(MouseEvent e) {
             }
         });
+
+        Runnable play = () -> {
+            if (isRunning) nextStep();
+        };
+
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(play, 0, 1, TimeUnit.SECONDS);
     }
 
     @Override
     protected void paintComponent(Graphics g) {  //paint hexagon field
-        Graphics2D graphics = (Graphics2D) g;
-        //TODO:
-        //        Stroke stroke = new BasicStroke(5.0f, CAP_SQUARE, JOIN_MITER, 10.0f, null, 0.0f);
-        //        graphics.setStroke(stroke);
-        graphics.drawImage(image, 0, 0, null);
+//        Graphics2D graphics = (Graphics2D) g;
+//        TODO:
+//                Stroke stroke = new BasicStroke(5.0f, CAP_SQUARE, JOIN_MITER, 10.0f, null, 0.0f);
+//                graphics.setStroke(stroke);
+        g.drawImage(image, 0, 0, null);
     }
 
     private Hexagon getHexAt(int x, int y) {
         for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == null) continue;
                 if (grid[i][j].isInside(x, y)) {
                     return grid[i][j];
                 }
+            }
         return null;
     }
 
     public void init() {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
-                if (grid[i][j].currentColor != BACKGROUND_COLOR) grid[i][j].spanSelf(BACKGROUND_COLOR);
+                if (grid[i][j] != null) {
+                    if (grid[i][j].currentColorRGB != BACKGROUND_COLOR) grid[i][j].setDead(isImpactShown);
+                    grid[i][j].setImpact(0, isImpactShown);
+                }
         repaint();
     }
 
@@ -122,59 +146,35 @@ public class HexagonGrid extends JPanel {
         replaceMode = false;
     }
 
-//    private void spanHexagon(int i, int j) {
-//        Stack<Pair<Integer, Integer>> toSpanDots = new Stack<>();
-//        toSpanDots.add(new Pair<>(i, j));
-//
-//        int prevColor = BACKGROUND_COLOR, newColor = ALIVE_COLOR;
-//
-//        try {
-//            if (image.getRGB(i, j) == newColor) {
-//                if (replaceMode)
-//                    return;
-//                else {
-//                    newColor = BACKGROUND_COLOR;
-//                    prevColor = ALIVE_COLOR;
-//                }
-//            }
-//
-//            boolean upperSpanTrigger, lowerSpanTrigger;
-//
-//            while (!toSpanDots.empty()) {
-//
-//                Pair<Integer, Integer> dot = toSpanDots.pop();
-//                int x = dot.getKey(), y = dot.getValue();
-//
-//                upperSpanTrigger = true;
-//                lowerSpanTrigger = true;
-//
-//                while (image.getRGB(x, y) == prevColor) x--;     //going to left border of hexagon
-//
-//                x++;                                                   //making x is the first pixel from border
-//
-//                while (image.getRGB(x, y) == prevColor) {
-//                    image.setRGB(x, y, newColor);
-//
-//                    if (image.getRGB(x, y + 1) == prevColor) {
-//                        if (upperSpanTrigger) {
-//                            toSpanDots.push(new Pair<>(x, y + 1));
-//                            upperSpanTrigger = false;
-//                        }
-//                    } else upperSpanTrigger = true;
-//
-//                    if (image.getRGB(x, y - 1) == prevColor) {
-//                        if (lowerSpanTrigger) {
-//                            toSpanDots.push(new Pair<>(x, y - 1));
-//                            lowerSpanTrigger = false;
-//                        }
-//                    } else lowerSpanTrigger = true;
-//
-//                    x++;
-//                }
-//            }
-//        } catch (ArrayIndexOutOfBoundsException ignored) {
-//            return;
-//        }
-//        repaint();
-//    }
+    private void updateImpacts() {
+        List<Hexagon> toKillList = new LinkedList<>();
+        List<Hexagon> toBeBornList = new LinkedList<>();
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                if (grid[i][j] != null)
+                    grid[i][j].updateImpact(toKillList, toBeBornList);
+        for (Hexagon hex : toBeBornList) hex.setAlive(isImpactShown);
+        for (Hexagon hex : toKillList) hex.setDead(isImpactShown);
+    }
+
+    public void switchRun(){
+        isRunning = !isRunning;
+    }
+
+    public void nextStep() {
+        updateImpacts();
+        repaint();
+    }
+
+    public void showImpact() {
+        isImpactShown = !isImpactShown;
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                if (grid[i][j] != null)
+                    if (isImpactShown) grid[i][j].showImpact();
+                    else grid[i][j].hideImpact();
+        repaint();
+    }
+
 }

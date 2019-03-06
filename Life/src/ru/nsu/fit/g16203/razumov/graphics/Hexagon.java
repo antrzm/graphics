@@ -5,42 +5,94 @@ import javafx.util.Pair;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Stack;
 
 import static ru.nsu.fit.g16203.razumov.graphics.HexagonGrid.ALIVE_COLOR;
 import static ru.nsu.fit.g16203.razumov.graphics.HexagonGrid.BACKGROUND_COLOR;
 
-class Hexagon {
+class Hexagon extends JPanel {
 
     private int gridX, gridY;
     private int coordsX, coordsY;
-    boolean isOddRow;
+    private boolean isOddRow;
 
-    public boolean isDead = true;
+    private double lifeBegin = 2.0, lifeEnd = 3.3, birthBegin = 2.3, birthEnd = 2.9, fstImpact = 1.0, sndImpact = 0.3;
 
-    int currentColor;
+    private double impact;
 
-    private static final int SIZE = 50;
+    boolean isDead = true;
+
+    int currentColorRGB;
+
+    private static final int SIZE = 30;
 
     private final int h = 2 * SIZE, w = (int) (Math.sqrt(3) * SIZE);
 
     private BufferedImage imageGrid;
 
-    Hexagon(int x, int y, BufferedImage image, Point[][] centers) {
+    private Hexagon[][] grid;
+
+    private Point[] firstOrderNeighbours;
+    private Point[] secondOrderNeighbours;
+
+    Hexagon(int x, int y, BufferedImage image, Point[][] centers, Hexagon[][] grid) {
         this.gridX = x;
         this.gridY = y;
 
-        this.currentColor = BACKGROUND_COLOR;
+        this.grid = grid;
 
-        this.imageGrid = image;
+        this.firstOrderNeighbours = new Point[6];
+        this.secondOrderNeighbours = new Point[6];
 
         this.isOddRow = y % 2 == 0;
+
+        initNeighbours();
+
+        this.impact = 0;
+
+        this.currentColorRGB = BACKGROUND_COLOR;
+
+        this.imageGrid = image;
 
         if (isOddRow) drawOddRowHex(centers);
         else drawEvenRowHex(centers);
 
         this.coordsX = centers[gridX][gridY].x;
         this.coordsY = centers[gridX][gridY].y;
+    }
+
+    private void initNeighbours() {
+        int x = gridX, y = gridY;
+        if (isOddRow) {
+            firstOrderNeighbours[0] = new Point(x - 1, y);
+            firstOrderNeighbours[1] = new Point(x - 1, y - 1);
+            firstOrderNeighbours[2] = new Point(x - 1, y + 1);
+            firstOrderNeighbours[3] = new Point(x, y + 1);
+            firstOrderNeighbours[4] = new Point(x, y - 1);
+            firstOrderNeighbours[5] = new Point(x + 1, y);
+
+            secondOrderNeighbours[0] = new Point(x - 2, y - 1);
+            secondOrderNeighbours[1] = new Point(x - 2, y + 1);
+            secondOrderNeighbours[2] = new Point(x + 1, y - 1);
+            secondOrderNeighbours[3] = new Point(x + 1, y + 1);
+            secondOrderNeighbours[4] = new Point(x, y - 2);
+            secondOrderNeighbours[5] = new Point(x, y + 2);
+        } else {
+            firstOrderNeighbours[0] = new Point(x, y + 1);
+            firstOrderNeighbours[1] = new Point(x, y - 1);
+            firstOrderNeighbours[2] = new Point(x - 1, y);
+            firstOrderNeighbours[3] = new Point(x + 1, y + 1);
+            firstOrderNeighbours[4] = new Point(x + 1, y - 1);
+            firstOrderNeighbours[5] = new Point(x + 1, y);
+
+            secondOrderNeighbours[0] = new Point(x - 1, y - 1);
+            secondOrderNeighbours[1] = new Point(x - 1, y + 1);
+            secondOrderNeighbours[2] = new Point(x + 2, y - 1);
+            secondOrderNeighbours[3] = new Point(x + 2, y + 1);
+            secondOrderNeighbours[4] = new Point(x, y - 2);
+            secondOrderNeighbours[5] = new Point(x, y + 2);
+        }
     }
 
     private void drawEvenRowHex(Point[][] centers) {
@@ -110,9 +162,49 @@ class Hexagon {
         }
     }
 
-    void spanSelf(int color) {
+    private boolean isValid(int i, int j) {
+        if (i < 0 || j < 0) return false;
+        if (i < grid.length && j < grid[0].length)
+            return grid[i][j] != null;
+        return false;
+    }
+
+    void setAlive(boolean isImpactShown) {
+        this.spanSelf(ALIVE_COLOR);
+        for (Point n1 : firstOrderNeighbours) {
+            if (isValid(n1.x, n1.y)) {
+                double impact = grid[n1.x][n1.y].getImpact();
+                grid[n1.x][n1.y].setImpact(impact + fstImpact, isImpactShown);
+            }
+        }
+        for (Point n2 : secondOrderNeighbours) {
+            if (isValid(n2.x, n2.y)) {
+                double impact = grid[n2.x][n2.y].getImpact();
+                grid[n2.x][n2.y].setImpact(impact + sndImpact, isImpactShown);
+            }
+        }
+    }
+
+    void setDead(boolean isImpactShown) {
+        if (isDead) return;
+        this.spanSelf(BACKGROUND_COLOR);
+        for (Point n1 : this.firstOrderNeighbours) {
+            if (isValid(n1.x, n1.y)) {
+                double impact = grid[n1.x][n1.y].getImpact();
+                grid[n1.x][n1.y].setImpact(impact - fstImpact, isImpactShown);
+            }
+        }
+        for (Point n2 : this.secondOrderNeighbours) {
+            if (isValid(n2.x, n2.y)) {
+                double impact = grid[n2.x][n2.y].getImpact();
+                grid[n2.x][n2.y].setImpact(impact - sndImpact, isImpactShown);
+            }
+        }
+    }
+
+    private void spanSelf(int color) {
         Stack<Pair<Integer, Integer>> toSpanDots = new Stack<>();
-        toSpanDots.add(new Pair<>(this.coordsX, this.coordsY));
+        toSpanDots.add(new Pair<>(this.coordsX - w / 4, this.coordsY));
 
         try {
             boolean upperSpanTrigger, lowerSpanTrigger;
@@ -125,21 +217,21 @@ class Hexagon {
                 upperSpanTrigger = true;
                 lowerSpanTrigger = true;
 
-                while (imageGrid.getRGB(x, y) == currentColor) x--;     //going to left border of hexagon
+                while (imageGrid.getRGB(x, y) == currentColorRGB) x--;     //going to left border of hexagon
 
                 x++;                                                   //making x is the first pixel from border
 
-                while (imageGrid.getRGB(x, y) == currentColor) {
+                while (imageGrid.getRGB(x, y) == currentColorRGB) {
                     imageGrid.setRGB(x, y, color);
 
-                    if (imageGrid.getRGB(x, y + 1) == currentColor) {
+                    if (imageGrid.getRGB(x, y + 1) == currentColorRGB) {
                         if (upperSpanTrigger) {
                             toSpanDots.push(new Pair<>(x, y + 1));
                             upperSpanTrigger = false;
                         }
                     } else upperSpanTrigger = true;
 
-                    if (imageGrid.getRGB(x, y - 1) == currentColor) {
+                    if (imageGrid.getRGB(x, y - 1) == currentColorRGB) {
                         if (lowerSpanTrigger) {
                             toSpanDots.push(new Pair<>(x, y - 1));
                             lowerSpanTrigger = false;
@@ -152,9 +244,9 @@ class Hexagon {
         } catch (ArrayIndexOutOfBoundsException ignored) {
             return;
         }
-        if (currentColor == ALIVE_COLOR) this.isDead = false;
-        if (currentColor == BACKGROUND_COLOR) this.isDead = true;
-        this.currentColor = color;
+        if (color == ALIVE_COLOR) this.isDead = false;
+        if (color == BACKGROUND_COLOR) this.isDead = true;
+        this.currentColorRGB = color;
     }
 
     boolean isInside(int x, int y) {
@@ -187,4 +279,44 @@ class Hexagon {
         return w;
     }
 
+    void showImpact() {
+        Graphics2D g2d = imageGrid.createGraphics();
+        g2d.setPaint(Color.BLACK);
+        g2d.setFont(new Font("", Font.BOLD, 14));
+        String s = String.format("%.1f", impact);
+        g2d.drawString(s, coordsX - 15, coordsY);
+        g2d.dispose();
+    }
+
+    void hideImpact() {
+        Graphics2D g2d = imageGrid.createGraphics();
+        g2d.setPaint(currentColorRGB == ALIVE_COLOR ? Color.GREEN : Color.WHITE);
+        g2d.setFont(new Font("", Font.BOLD, 14));
+        String s = String.format("%.1f", impact);
+        g2d.drawString(s, coordsX - 15, coordsY);
+        g2d.dispose();
+        this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);
+        this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);
+    }
+
+    void setImpact(double newVal, boolean isShown) {
+        if (isShown) {
+            hideImpact();
+            this.impact = newVal;
+            showImpact();
+        } else {
+            this.impact = newVal;
+        }
+    }
+
+    private double getImpact() {
+        return impact;
+    }
+
+    void updateImpact(List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
+        if (isDead && impact >= birthBegin && impact <= birthEnd)
+            toBeBornList.add(this);
+        else if (!isDead && impact < lifeBegin || impact > lifeEnd)
+            toKillList.add(this);
+    }
 }
