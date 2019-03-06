@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Stack;
 
@@ -283,8 +284,8 @@ class Hexagon extends JPanel {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(Color.BLACK);
         g2d.setFont(new Font("", Font.BOLD, 14));
-        String s = String.format("%.1f", impact);
-        g2d.drawString(s, coordsX - 15, coordsY);
+        String s = new DecimalFormat("0.#").format(impact);
+        g2d.drawString(s, coordsX, coordsY);
         g2d.dispose();
     }
 
@@ -292,8 +293,8 @@ class Hexagon extends JPanel {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(currentColorRGB == ALIVE_COLOR ? Color.GREEN : Color.WHITE);
         g2d.setFont(new Font("", Font.BOLD, 14));
-        String s = String.format("%.1f", impact);
-        g2d.drawString(s, coordsX - 15, coordsY);
+        String s = new DecimalFormat("0.#").format(impact);
+        g2d.drawString(s, coordsX, coordsY);
         g2d.dispose();
         this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);
         this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);

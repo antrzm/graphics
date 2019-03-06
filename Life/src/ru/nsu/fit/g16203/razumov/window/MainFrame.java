@@ -13,7 +13,7 @@ import java.security.InvalidParameterException;
 public class MainFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     private JMenuBar menuBar;
-    private JToolBar toolBar;
+    public JToolBar toolBar;
 
     private MainFrame() {
         try {

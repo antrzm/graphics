@@ -6,6 +6,8 @@ import ru.nsu.fit.g16203.razumov.window.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class MainWindow extends MainFrame {
 
@@ -13,26 +15,28 @@ public class MainWindow extends MainFrame {
 
     private HexagonGrid hexagonGrid;
 
+    private JPanel statusBar;
+
     private MainWindow() {
         super(800, 600, "Conway's Game of Life");
 
         try {
             addSubMenu("File", KeyEvent.VK_F);
-            addMenuItem("File/New", "New file", KeyEvent.VK_N, "onNew");
-            addMenuItem("File/Open...", "Open file", KeyEvent.VK_O, "onOpen");
-            addMenuItem("File/Save", "Save file", KeyEvent.VK_S, "onSave");
-            addMenuItem("File/Save as...", "Save file as", "onSaveAs");
+            addMenuItem("File/New", "Create new file", KeyEvent.VK_N, "onNew");
+            addMenuItem("File/Open...", "Open an existing file", KeyEvent.VK_O, "onOpen");
+            addMenuItem("File/Save", "Save active file", KeyEvent.VK_S, "onSave");
+            addMenuItem("File/Save as...", "Save active file as", "onSaveAs");
             addMenuItem("File/Exit", "Exit application", KeyEvent.VK_E, "Exit.png", "onExit");
 
             addSubMenu("Modify", KeyEvent.VK_M);
             addMenuItem("Modify/Options", "Options", KeyEvent.VK_O, "onOptions");
-            addMenuItem("Modify/Replace", "Replace", KeyEvent.VK_R, "onReplace");
-            addMenuItem("Modify/Xor", "XOR", KeyEvent.VK_X, "onXor");
-            addMenuItem("Modify/Impact", "Impact", KeyEvent.VK_I, "onImpact");
-            addMenuItem("Modify/Colors", "Colors", KeyEvent.VK_C, "onColors");
+            addMenuItem("Modify/Replace", "Replace mode", KeyEvent.VK_R, "onReplace");
+            addMenuItem("Modify/Xor", "XOR mode", KeyEvent.VK_X, "onXor");
+            addMenuItem("Modify/Impact", "Show/hide impacts", KeyEvent.VK_I, "onImpact");
+            //addMenuItem("Modify/Colors", "Colors", KeyEvent.VK_C, "onColors");
 
             addSubMenu("Action", KeyEvent.VK_A);
-            addMenuItem("Action/Init", "Init", KeyEvent.VK_I, "onInit");
+            addMenuItem("Action/Init", "Init field", KeyEvent.VK_I, "onInit");
             addMenuItem("Action/Next", "Next step", KeyEvent.VK_N, "onNext");
             addMenuItem("Action/Run", "Run/Pause", KeyEvent.VK_R, "onRun");
 
@@ -51,7 +55,7 @@ public class MainWindow extends MainFrame {
             addToolBarButton("Modify/Replace", "Replace.png");
             addToolBarButton("Modify/Xor", "Xor.png");
             addToolBarButton("Modify/Impact", "Impact.png");
-            addToolBarButton("Modify/Colors", "Colors.png");
+            //addToolBarButton("Modify/Colors", "Colors.png");
             addToolBarSeparator();
             addToolBarButton("Action/Init", "Init.png");
             addToolBarButton("Action/Next", "Next.png");
@@ -62,23 +66,54 @@ public class MainWindow extends MainFrame {
             hexagonGrid = new HexagonGrid(10, 10);
             add(hexagonGrid);
 
-            JPanel statusBar = new JPanel();
-            status = new JLabel("Ready");
+            statusBar = new JPanel();
+            status = new JLabel("Ready");        //TODO: hardcode as a constant
             statusBar.add(status);
             add(statusBar, BorderLayout.PAGE_END);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        setSize(hexagonGrid.width, hexagonGrid.height);
+        setSize(hexagonGrid.width - 50, hexagonGrid.height + 50);
+
+        MouseListener ml = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    status.setText(((JButton) e.getSource()).getToolTipText());
+                } catch (ClassCastException ignored) {
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                status.setText("Ready");        //TODO: current state of game
+            }
+        };
+
+        for (Component comp : this.toolBar.getComponents()) {
+            comp.addMouseListener(ml);
+        }
     }
 
     public void onNew() {       //TODO
-        status.setText("New file");
+
     }
 
     public void onOpen() {      //TODO
-        status.setText("New file");
+
     }
 
     public void onSave() {      //TODO
@@ -106,7 +141,7 @@ public class MainWindow extends MainFrame {
         hexagonGrid.showImpact();
     }
 
-    public void onColors() {   //TODO
+    public void onColors() {   //TODO ?
     }
 
     public void onInit() {
@@ -114,23 +149,29 @@ public class MainWindow extends MainFrame {
     }
 
     public void onNext() {
-        if (!status.getText().equals("Running..."))
+        if (!status.getText().equals("Running..."))         //TODO: hardcode as a constant
             hexagonGrid.nextStep();
     }
 
     public void onRun() {
-        if (status.getText().equals("Running...")) status.setText("Paused");
+        if (status.getText().equals("Running...")) status.setText("Paused");  //TODO: hardcode as a constant
         else status.setText("Running...");
         hexagonGrid.switchRun();
     }
 
-    public void onToolBar() {   //TODO
+    public void onToolBar() {
+        if(this.toolBar.isShowing()) this.toolBar.setVisible(false);
+        else this.toolBar.setVisible(true);
     }
 
-    public void onStatusBar() {   //TODO
+    public void onStatusBar() {
+        if(this.statusBar.isVisible())
+            this.statusBar.setVisible(false);
+        else
+            this.statusBar.setVisible(true);
     }
 
-    public void onAbout() {         //TODO: change info
+    public void onAbout() {
         JOptionPane.showMessageDialog(this, "Init, version 1.0\nCopyright (c) 2019 Anton Razumov, FIT, group 16203", "About Init", JOptionPane.INFORMATION_MESSAGE);
     }
 
