@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Stack;
 
 import static ru.nsu.fit.g16203.razumov.graphics.HexagonGrid.ALIVE_COLOR;
@@ -18,30 +17,33 @@ class Hexagon extends JPanel {
     private int coordsX, coordsY;
     private boolean isOddRow;
 
-    private double lifeBegin = 2.0, lifeEnd = 3.3, birthBegin = 2.3, birthEnd = 2.9, fstImpact = 1.0, sndImpact = 0.3;
-
-    private double impact;
+    double impact;
 
     boolean isDead = true;
 
     int currentColorRGB;
 
-    private static final int SIZE = 30;
+    private int size;
 
-    private final int h = 2 * SIZE, w = (int) (Math.sqrt(3) * SIZE);
+    private final int h, w;
 
     private BufferedImage imageGrid;
 
     private Hexagon[][] grid;
 
-    private Point[] firstOrderNeighbours;
-    private Point[] secondOrderNeighbours;
+    Point[] firstOrderNeighbours;
+    Point[] secondOrderNeighbours;
 
-    Hexagon(int x, int y, BufferedImage image, Point[][] centers, Hexagon[][] grid) {
+    Hexagon(int x, int y, BufferedImage image, Point[][] centers, Hexagon[][] grid, int size) {
         this.gridX = x;
         this.gridY = y;
 
         this.grid = grid;
+
+        this.size = size;
+
+        this.h = 2 * size;
+        this.w = (int) (Math.sqrt(3) * size);
 
         this.firstOrderNeighbours = new Point[6];
         this.secondOrderNeighbours = new Point[6];
@@ -163,47 +165,7 @@ class Hexagon extends JPanel {
         }
     }
 
-    private boolean isValid(int i, int j) {
-        if (i < 0 || j < 0) return false;
-        if (i < grid.length && j < grid[0].length)
-            return grid[i][j] != null;
-        return false;
-    }
-
-    void setAlive(boolean isImpactShown) {
-        this.spanSelf(ALIVE_COLOR);
-        for (Point n1 : firstOrderNeighbours) {
-            if (isValid(n1.x, n1.y)) {
-                double impact = grid[n1.x][n1.y].getImpact();
-                grid[n1.x][n1.y].setImpact(impact + fstImpact, isImpactShown);
-            }
-        }
-        for (Point n2 : secondOrderNeighbours) {
-            if (isValid(n2.x, n2.y)) {
-                double impact = grid[n2.x][n2.y].getImpact();
-                grid[n2.x][n2.y].setImpact(impact + sndImpact, isImpactShown);
-            }
-        }
-    }
-
-    void setDead(boolean isImpactShown) {
-        if (isDead) return;
-        this.spanSelf(BACKGROUND_COLOR);
-        for (Point n1 : this.firstOrderNeighbours) {
-            if (isValid(n1.x, n1.y)) {
-                double impact = grid[n1.x][n1.y].getImpact();
-                grid[n1.x][n1.y].setImpact(impact - fstImpact, isImpactShown);
-            }
-        }
-        for (Point n2 : this.secondOrderNeighbours) {
-            if (isValid(n2.x, n2.y)) {
-                double impact = grid[n2.x][n2.y].getImpact();
-                grid[n2.x][n2.y].setImpact(impact - sndImpact, isImpactShown);
-            }
-        }
-    }
-
-    private void spanSelf(int color) {
+    void spanSelf(int color) {
         Stack<Pair<Integer, Integer>> toSpanDots = new Stack<>();
         toSpanDots.add(new Pair<>(this.coordsX - w / 4, this.coordsY));
 
@@ -285,7 +247,7 @@ class Hexagon extends JPanel {
         g2d.setPaint(Color.BLACK);
         g2d.setFont(new Font("", Font.BOLD, 14));
         String s = new DecimalFormat("0.#").format(impact);
-        g2d.drawString(s, coordsX, coordsY);
+        g2d.drawString(s, coordsX - w/10, coordsY);
         g2d.dispose();
     }
 
@@ -294,7 +256,7 @@ class Hexagon extends JPanel {
         g2d.setPaint(currentColorRGB == ALIVE_COLOR ? Color.GREEN : Color.WHITE);
         g2d.setFont(new Font("", Font.BOLD, 14));
         String s = new DecimalFormat("0.#").format(impact);
-        g2d.drawString(s, coordsX, coordsY);
+        g2d.drawString(s, coordsX - w/10, coordsY);
         g2d.dispose();
         this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);
         this.spanSelf(currentColorRGB == BACKGROUND_COLOR ? ALIVE_COLOR : BACKGROUND_COLOR);
@@ -310,14 +272,7 @@ class Hexagon extends JPanel {
         }
     }
 
-    private double getImpact() {
+    double getImpact() {
         return impact;
-    }
-
-    void updateImpact(List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
-        if (isDead && impact >= birthBegin && impact <= birthEnd)
-            toBeBornList.add(this);
-        else if (!isDead && impact < lifeBegin || impact > lifeEnd)
-            toKillList.add(this);
     }
 }

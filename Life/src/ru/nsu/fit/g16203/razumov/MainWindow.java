@@ -16,6 +16,9 @@ public class MainWindow extends MainFrame {
     private HexagonGrid hexagonGrid;
 
     private JPanel statusBar;
+    private JDialog dialog;
+
+    private JScrollPane scrollPane;
 
     private MainWindow() {
         super(800, 600, "Conway's Game of Life");
@@ -55,7 +58,7 @@ public class MainWindow extends MainFrame {
             addToolBarButton("Modify/Replace", "Replace.png");
             addToolBarButton("Modify/Xor", "Xor.png");
             addToolBarButton("Modify/Impact", "Impact.png");
-            //addToolBarButton("Modify/Colors", "Colors.png");
+            //addToolBarButton("Modify/Colors", "Colors.png");  //TODO?
             addToolBarSeparator();
             addToolBarButton("Action/Init", "Init.png");
             addToolBarButton("Action/Next", "Next.png");
@@ -63,7 +66,7 @@ public class MainWindow extends MainFrame {
             addToolBarSeparator();
             addToolBarButton("Help/About...", "About.png");
 
-            hexagonGrid = new HexagonGrid(10, 10);
+            hexagonGrid = new HexagonGrid(15, 10);
             add(hexagonGrid);
 
             statusBar = new JPanel();
@@ -74,7 +77,13 @@ public class MainWindow extends MainFrame {
             throw new RuntimeException(e);
         }
 
-        setSize(hexagonGrid.width - 50, hexagonGrid.height + 50);
+        this.setPreferredSize(new Dimension(hexagonGrid.width - 50, hexagonGrid.height + 50));
+
+        scrollPane = new JScrollPane(hexagonGrid, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setWheelScrollingEnabled(true);
+
+        add(scrollPane);
 
         MouseListener ml = new MouseListener() {
             @Override
@@ -106,6 +115,10 @@ public class MainWindow extends MainFrame {
         for (Component comp : this.toolBar.getComponents()) {
             comp.addMouseListener(ml);
         }
+
+        dialog = new JDialog(this, "Options", true);
+        hexagonGrid.initDialog(dialog);
+        dialog.setLocationRelativeTo(this);
     }
 
     public void onNew() {       //TODO
@@ -127,6 +140,7 @@ public class MainWindow extends MainFrame {
     }
 
     public void onOptions() {   //TODO
+        dialog.setVisible(true);
     }
 
     public void onReplace() {
@@ -160,12 +174,12 @@ public class MainWindow extends MainFrame {
     }
 
     public void onToolBar() {
-        if(this.toolBar.isShowing()) this.toolBar.setVisible(false);
+        if (this.toolBar.isShowing()) this.toolBar.setVisible(false);
         else this.toolBar.setVisible(true);
     }
 
     public void onStatusBar() {
-        if(this.statusBar.isVisible())
+        if (this.statusBar.isVisible())
             this.statusBar.setVisible(false);
         else
             this.statusBar.setVisible(true);

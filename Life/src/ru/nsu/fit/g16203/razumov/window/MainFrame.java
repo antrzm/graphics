@@ -18,7 +18,6 @@ public class MainFrame extends JFrame {
     private MainFrame() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {
         }
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
