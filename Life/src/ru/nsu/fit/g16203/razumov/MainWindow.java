@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.*;
+import java.util.List;
 
 public class MainWindow extends MainFrame {
 
@@ -122,17 +124,25 @@ public class MainWindow extends MainFrame {
     }
 
     public void onNew() {       //TODO
-
+        int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (res == JOptionPane.YES_OPTION) saveFile();
+        if (hexagonGrid.isRunning) hexagonGrid.switchRun();
+        //TODO
     }
 
-    public void onOpen() {      //TODO
-
+    public void onOpen() {
+        hexagonGrid.isRunning = false;
+        int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (res == JOptionPane.YES_OPTION) saveFile();
+        loadFile();
     }
 
     public void onSave() {      //TODO
+        saveFile();
     }
 
-    public void onSaveAs() {    //TODO
+    public void onSaveAs() {
+        saveFile();
     }
 
     public void onExit() {
@@ -152,7 +162,7 @@ public class MainWindow extends MainFrame {
     }
 
     public void onImpact() {
-        hexagonGrid.showImpact();
+        hexagonGrid.switchImpact();
     }
 
     public void onColors() {   //TODO ?
@@ -187,6 +197,100 @@ public class MainWindow extends MainFrame {
 
     public void onAbout() {
         JOptionPane.showMessageDialog(this, "Init, version 1.0\nCopyright (c) 2019 Anton Razumov, FIT, group 16203", "About Init", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void saveFile() {
+        int n = hexagonGrid.getN();
+        int m = hexagonGrid.getM();
+        int size = hexagonGrid.getHexSize();
+        int thickness = hexagonGrid.getThickness();
+
+        List<Point> aliveCells = hexagonGrid.getAliveGrid();
+        String fileName;
+        File file = new File("file" + java.time.LocalDate.now() + ".txt");
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(file);
+        int res = fileChooser.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            file = fileChooser.getSelectedFile();
+            fileName = file.getAbsolutePath();
+            if (!fileName.endsWith(".txt")) {
+                file = new File(fileName + ".txt");
+            }
+        } else return;
+
+        try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(m + " " + n + "\n");
+            writer.write(thickness + "\n");
+            writer.write(size + " " + "\n");
+            writer.write(aliveCells.size() + "\n");
+            for (Point cell : aliveCells) {
+                writer.write(cell.x + " " + cell.y + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFile() {
+        String line;
+        int[] params = new int[5];
+        int i = 0;
+        int n, m, size, thick;
+        int cellNum;
+        File file;
+        JFileChooser fileChooser = new JFileChooser();
+
+        int ret = fileChooser.showOpenDialog(this);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            file = fileChooser.getSelectedFile();
+        } else return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null && i < 5) {
+                if (line.contains("/")) {
+                    line = line.substring(0, line.indexOf("/"));
+                }
+
+                String[] split = line.split(" ");
+                for (String s : split) {
+                    params[i] = Integer.parseInt(s);
+                    i++;
+                }
+            }
+
+            m = params[0];
+            n = params[1];
+            thick = params[2];
+            size = params[3];
+            cellNum = params[4];
+
+            hexagonGrid.setN(n);
+            hexagonGrid.setM(m);
+            hexagonGrid.setHexSize(size);
+            hexagonGrid.setThickness(thick);
+
+            hexagonGrid.initGrid();
+
+            for (int j = 0; j < cellNum; j++) {
+                if (line != null) {
+                    if (line.contains("/")) {
+                        line = line.substring(0, line.indexOf("/"));
+                    }
+                    line = line.trim();
+                    String[] split = line.split(" ");
+                    int x = Integer.parseInt(split[0]), y = Integer.parseInt(split[1]);
+                    if (x >= m || y >= n) {
+                        JOptionPane.showMessageDialog(this, "Wrong file params", "File Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    hexagonGrid.setAlive(hexagonGrid.grid[x][y], false);
+                }
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

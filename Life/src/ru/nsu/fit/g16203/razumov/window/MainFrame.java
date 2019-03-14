@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
@@ -182,13 +181,5 @@ public class MainFrame extends JFrame {
 
     protected void addToolBarSeparator() {
         toolBar.addSeparator();
-    }
-
-    public File getSaveFileName(String extension, String description) {
-        return FileUtils.getSaveFileName(this, extension, description);
-    }
-
-    public File getOpenFileName(String extension, String description) {
-        return FileUtils.getOpenFileName(this, extension, description);
     }
 }
