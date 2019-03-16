@@ -16,6 +16,8 @@ class Hexagon extends JPanel {
     private Point center;
     private boolean isOddRow;
 
+    private int thickness;
+
     double impact;
 
     boolean isDead = true;
@@ -29,12 +31,14 @@ class Hexagon extends JPanel {
     Point[] firstOrderNeighbours;
     Point[] secondOrderNeighbours;
 
-    Hexagon(int x, int y, BufferedImage image, int size) {
+    Hexagon(int x, int y, BufferedImage image, int size, Integer thickness) {
         this.gridX = x;
         this.gridY = y;
 
         this.h = 2 * size;
         this.w = (int) (Math.sqrt(3) * size);
+
+        this.thickness = thickness;
 
         this.firstOrderNeighbours = new Point[6];
         this.secondOrderNeighbours = new Point[6];
@@ -92,14 +96,30 @@ class Hexagon extends JPanel {
         int off = 10;   //offset
 
         int wx = w * this.gridX + w / 2, hy = (int) (h * (this.gridY + 1) / 2 * 1.5) - 3 * h / 4;
-        this.center = new Point( off + w * gridX + w, off + hy + h / 2);
+        this.center = new Point(off + w * gridX + w, off + hy + h / 2);
 
-        bresenham(off + wx, off + hy + h / 4, off + wx + w / 2, off + hy);
-        bresenham(off + wx + w / 2, off + hy, off + wx + w, off + hy + h / 4);
-        bresenham(off + wx + w, off + hy + h / 4, off + wx + w, off + hy + 3 * h / 4);
-        bresenham(off + wx + w, off + hy + 3 * h / 4, off + wx + w / 2, off + hy + h);
-        bresenham(off + wx + w / 2, off + hy + h, off + wx, off + hy + 3 * h / 4);
-        bresenham(off + wx, off + hy + 3 * h / 4, off + wx, off + hy + h / 4);
+        int x1 = off + wx, x2 = off + wx + w / 2, x3 = off + wx + w, x4 = off + wx + w, x5 = off + wx + w / 2, x6 = off + wx;
+        int y1 = off + hy + h / 4, y2 = off + hy, y3 = off + hy + h / 4, y4 = off + hy + 3 * h / 4, y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
+
+        if (thickness == 1) {
+            bresenham(x1, y1, x2, y2);
+            bresenham(x2, y2, x3, y3);
+            bresenham(x3, y3, x4, y4);
+            bresenham(x4, y4, x5, y5);
+            bresenham(x5, y5, x6, y6);
+            bresenham(x6, y6, x1, y1);
+        } else {
+            Graphics2D g = (Graphics2D) this.imageGrid.getGraphics();
+            g.setPaint(Color.BLACK);
+            g.setStroke(new BasicStroke(thickness));
+            g.drawLine(x1, y1, x2, y2);
+            g.drawLine(x2, y2, x3, y3);
+            g.drawLine(x3, y3, x4, y4);
+            g.drawLine(x4, y4, x5, y5);
+            g.drawLine(x5, y5, x6, y6);
+            g.drawLine(x6, y6, x1, y1);
+            g.setStroke(new BasicStroke(1));
+        }
 
     }
 
@@ -107,22 +127,34 @@ class Hexagon extends JPanel {
         int off = 10;   //offset
 
         int wx = w * this.gridX, hy = (int) (h * this.gridY * 1.5) / 2;
-        this.center = new Point( off + wx + w / 2, off + hy + h / 2);
+        this.center = new Point(off + wx + w / 2, off + hy + h / 2);
 
-        bresenham(off + wx, off + hy + h / 4, off + wx + w / 2, off + hy);
-        bresenham(off + wx + w / 2, off + hy, off + wx + w, off + hy + h / 4);
-        bresenham(off + wx + w, off + hy + h / 4, off + wx + w, off + hy + 3 * h / 4);
-        bresenham(off + wx + w, off + hy + 3 * h / 4, off + wx + w / 2, off + hy + h);
-        bresenham(off + wx + w / 2, off + hy + h, off + wx, off + hy + 3 * h / 4);
-        bresenham(off + wx, off + hy + 3 * h / 4, off + wx, off + hy + h / 4);
+        int x1 = off + wx, x2 = off + wx + w / 2, x3 = off + wx + w, x4 = off + wx + w, x5 = off + wx + w / 2, x6 = off + wx;
+        int y1 = off + hy + h / 4, y2 = off + hy, y3 = off + hy + h / 4, y4 = off + hy + 3 * h / 4, y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
 
+        if (thickness == 1) {
+            bresenham(x1, y1, x2, y2);
+            bresenham(x2, y2, x3, y3);
+            bresenham(x3, y3, x4, y4);
+            bresenham(x5, y5, x4, y4);
+            bresenham(x6, y6, x5, y5);
+            bresenham(x6, y6, x1, y1);
+        } else {
+            Graphics2D g = this.imageGrid.createGraphics();
+            g.setPaint(Color.BLACK);
+            g.setStroke(new BasicStroke(thickness));
+            g.drawLine(x1, y1, x2, y2);
+            g.drawLine(x2, y2, x3, y3);
+            g.drawLine(x3, y3, x4, y4);
+            g.drawLine(x4, y4, x5, y5);
+            g.drawLine(x5, y5, x6, y6);
+            g.drawLine(x6, y6, x1, y1);
+            g.setStroke(new BasicStroke(1));
+        }
         System.out.println();
     }
 
     private void bresenham(int x1, int y1, int x2, int y2) {
-
-        if (imageGrid.getRGB(x1, y1) != BACKGROUND_COLOR && imageGrid.getRGB(x2, y2) != BACKGROUND_COLOR && (imageGrid.getRGB((x1 + x2) / 2, (y1 + y2) / 2) != BACKGROUND_COLOR || imageGrid.getRGB((x1 + x2) / 2 + 1, (y1 + y2) / 2) != BACKGROUND_COLOR))
-            return;        //avoiding double line       //TODO: too long - FIX IT
 
         int x = x1, y = y1;
         int dx = Math.abs(x2 - x1), dy = Math.abs(y2 - y1);
@@ -220,18 +252,20 @@ class Hexagon extends JPanel {
     void showImpact() {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(Color.RED);
-        g2d.setFont(new Font("", Font.BOLD, (int) (h / 2.5)));
+        g2d.setFont(new Font("", Font.BOLD, 14));
         String s = new DecimalFormat("0.#").format(impact);
-        g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
+        if (impact == 0.0) g2d.drawString(s, center.x, center.y + h / 5);
+        else g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
         g2d.dispose();
     }
 
     void hideImpact() {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(currentColorRGB == ALIVE_COLOR ? Color.GREEN : Color.GRAY);
-        g2d.setFont(new Font("", Font.BOLD, (int) (h / 2.5)));
+        g2d.setFont(new Font("", Font.BOLD, 14));
         String s = new DecimalFormat("0.#").format(impact);
-        g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
+        if (impact == 0.0) g2d.drawString(s, center.x, center.y + h / 5);
+        else g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
         g2d.dispose();
     }
 

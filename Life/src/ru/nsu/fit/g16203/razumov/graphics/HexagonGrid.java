@@ -16,6 +16,8 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class HexagonGrid extends JPanel {
 
+    private static final int MAX_W = 3840, MAX_H = 2160;
+
     private BufferedImage image;
 
     static final int BACKGROUND_COLOR = Color.WHITE.getRGB();
@@ -24,6 +26,8 @@ public class HexagonGrid extends JPanel {
 
     private boolean replaceMode;
     private boolean isImpactShown;
+
+    public boolean isChanged;
 
     private double liveBegin = 2.0, liveEnd = 3.3, birthBegin = 2.3, birthEnd = 2.9, fstImpact = 1.0, sndImpact = 0.3;
 
@@ -48,20 +52,19 @@ public class HexagonGrid extends JPanel {
         this.m = m;
 
         this.hexSize = 30;
-        this.h = 2 * hexSize;
-        this.w = (int) (Math.sqrt(3) * hexSize);
-
-        this.image = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
-
-        this.width = n * w + 100;
-        this.height = m * h;
-
         this.thickness = 1;
+
+        image = new BufferedImage(MAX_W, MAX_H, BufferedImage.TYPE_INT_RGB);
 
         replaceMode = true;
         isImpactShown = false;
         isRunning = false;
         prevHex = null;
+        isChanged = false;
+
+        for (int i = 0; i < image.getWidth(); i++)
+            for (int j = 0; j < image.getHeight(); j++)
+                image.setRGB(i, j, BACKGROUND_COLOR);   //erasing old grid
 
         initGrid();
 
@@ -116,29 +119,24 @@ public class HexagonGrid extends JPanel {
 
         grid = new Hexagon[n][m];
 
-        if (n * w > 1920) {
-            hexSize = (int) (1920 / (n * Math.sqrt(3)));
-            initGrid();
-        }
-        if (m * h > 1080) {
-            hexSize = 1080 / (m * 2);
-            initGrid();
-        }
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                image.setRGB(i, j, BACKGROUND_COLOR);   //erasing old grid
 
-        for (int i = 0; i < image.getWidth(); i++)
-            for (int j = 0; j < image.getHeight(); j++)
-                image.setRGB(i, j, BACKGROUND_COLOR);
+        this.width = n * w + 20;
+        this.height = m * h * 3 / 4 + 50;
+
+        this.setPreferredSize(new Dimension(width, height));
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (i == n - 1 && j % 2 != 0) continue;
-                grid[i][j] = new Hexagon(i, j, image, hexSize);
+                grid[i][j] = new Hexagon(i, j, image, hexSize, thickness);
             }
         }
         repaint();
         if (isImpactShown) switchImpact();
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {  //paint hexagon field
@@ -156,7 +154,7 @@ public class HexagonGrid extends JPanel {
         return null;
     }
 
-    public void init() {
+    public void reset() {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 if (grid[i][j] != null) {
@@ -186,6 +184,9 @@ public class HexagonGrid extends JPanel {
     }
 
     private void updateHexImpact(Hexagon hexagon, List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
+        if (hexagon.impact == 2)
+            System.out.println();
+
         if (hexagon.isDead && hexagon.impact >= birthBegin && hexagon.impact <= birthEnd)
             toBeBornList.add(hexagon);
         else if (!hexagon.isDead && hexagon.impact < liveBegin || hexagon.impact > liveEnd)
@@ -204,12 +205,13 @@ public class HexagonGrid extends JPanel {
     public void switchImpact() {
         isImpactShown = !isImpactShown;
 
-        if (hexSize > 5) {
+        if (hexSize >= 15) {
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
-                    if (grid[i][j] != null)
+                    if (grid[i][j] != null) {
                         if (isImpactShown) grid[i][j].showImpact();
                         else grid[i][j].hideImpact();
+                    }
             repaint();
         } else JOptionPane.showMessageDialog(this,
                 "Too little hexagon hexSize for displaying impacts",
@@ -217,6 +219,7 @@ public class HexagonGrid extends JPanel {
     }
 
     public void setAlive(Hexagon hex, boolean isImpactShown) {
+        if (!isChanged) isChanged = true;
         if (isImpactShown) {
             hex.hideImpact();
             hex.spanSelf(ALIVE_COLOR);
@@ -237,6 +240,7 @@ public class HexagonGrid extends JPanel {
     }
 
     private void setDead(Hexagon hex, boolean isImpactShown) {
+        if (!isChanged) isChanged = true;
         if (hex.isDead) return;
         if (!isImpactShown) {
             hex.spanSelf(DEAD_COLOR);
@@ -302,12 +306,13 @@ public class HexagonGrid extends JPanel {
         sliderSize.setValue(hexSize);
         slidersPanel.add(sliderSize);
 
+        //Thickness
         JLabel thicknessLabel = new JLabel("Thickness", SwingConstants.CENTER);
         sizesNamesPanel.add(thicknessLabel);
         JTextField thicknessField = new JTextField(this.thickness.toString());
         sizesValuesPanel.add(thicknessField);
-        JSlider sliderThickness = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
-        sliderSize.setValue(thickness);
+        JSlider sliderThickness = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
+        sliderThickness.setValue(thickness);
         slidersPanel.add(sliderThickness);
 
         JLabel liveBeginLabel = new JLabel("LIVE BEGIN", SwingConstants.CENTER);
@@ -404,22 +409,32 @@ public class HexagonGrid extends JPanel {
         });
 
         confirmButton.addActionListener(e -> {
-            int n = this.n, m = this.m, size = this.hexSize;
+            int n = this.n, m = this.m, size = this.hexSize, thickness = this.thickness;
 
             double tmp;
 
             if (!nField.getText().isEmpty()) {
-                n = Integer.parseInt(nField.getText());
+                try {
+                    n = Integer.parseInt(nField.getText());
+                } catch (NumberFormatException ignored) {
+                }
             }
             if (!mField.getText().isEmpty()) {
-                m = Integer.parseInt(mField.getText());
+                try {
+                    m = Integer.parseInt(mField.getText());
+                } catch (NumberFormatException ignored) {
+                }
             }
             if (!sizeField.getText().isEmpty()) {
-                size = sliderSize.getValue();
+                try {
+                    size = sliderSize.getValue();
+                } catch (NumberFormatException ignored){}
             }
 
             if (!thicknessField.getText().isEmpty()) {
+                try{
                 thickness = sliderThickness.getValue();
+                } catch (NumberFormatException ignored){}
             }
 
             if (!fstImpactText.getText().isEmpty()) {
@@ -501,10 +516,23 @@ public class HexagonGrid extends JPanel {
                 }
             }
 
-            if (this.hexSize != size || this.n != n || this.m != m) {
-                this.hexSize = size;
-                this.n = n;
-                this.m = m;
+            if (this.hexSize != size || this.n != n || this.m != m || this.thickness != thickness) {
+                int newSize = isResolutionOk(n, m, size);
+                if (newSize != -1) {
+                    int res = JOptionPane.showConfirmDialog(this,
+                            "To display grid with this number of rows and columns size will be changed to " + newSize,
+                            "Size change", JOptionPane.OK_CANCEL_OPTION);
+                    if (res == JOptionPane.OK_OPTION) {
+                        this.hexSize = newSize;
+                        this.n = n;
+                        this.m = m;
+                    } else return;
+                } else {
+                    this.hexSize = size;
+                    this.n = n;
+                    this.m = m;
+                }
+                this.thickness = thickness;
                 initGrid();
             }
             dialog.dispose();
@@ -523,6 +551,13 @@ public class HexagonGrid extends JPanel {
         dialog.setPreferredSize(new Dimension(720, 480));
         dialog.setResizable(false);
         dialog.pack();
+    }
+
+    private int isResolutionOk(int n, int m, int size) {
+        int newSize = -1;
+        if (n * size * Math.sqrt(3) > MAX_W) newSize = (int) (MAX_W / (n * Math.sqrt(3)));
+        if (m * size * 2 > MAX_H) newSize = MAX_H / (2 * m);
+        return newSize;
     }
 
     public Integer getN() {
@@ -565,5 +600,9 @@ public class HexagonGrid extends JPanel {
                 if (!grid[i][j].isDead) alive.add(new Point(i, j));
             }
         return alive;
+    }
+
+    public void setImpactShown(boolean impactShown) {
+        isImpactShown = impactShown;
     }
 }

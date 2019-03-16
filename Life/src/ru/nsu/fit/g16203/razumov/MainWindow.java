@@ -15,12 +15,13 @@ public class MainWindow extends MainFrame {
 
     private JLabel status;
 
+    private static final String READY = "Ready", PAUSED = "Paused", RUNNING = "Running...";
+
     private HexagonGrid hexagonGrid;
 
     private JPanel statusBar;
     private JDialog dialog;
-
-    private JScrollPane scrollPane;
+    JScrollPane scrollPane;
 
     private MainWindow() {
         super(800, 600, "Conway's Game of Life");
@@ -29,7 +30,6 @@ public class MainWindow extends MainFrame {
             addSubMenu("File", KeyEvent.VK_F);
             addMenuItem("File/New", "Create new file", KeyEvent.VK_N, "onNew");
             addMenuItem("File/Open...", "Open an existing file", KeyEvent.VK_O, "onOpen");
-            addMenuItem("File/Save", "Save active file", KeyEvent.VK_S, "onSave");
             addMenuItem("File/Save as...", "Save active file as", "onSaveAs");
             addMenuItem("File/Exit", "Exit application", KeyEvent.VK_E, "Exit.png", "onExit");
 
@@ -38,7 +38,6 @@ public class MainWindow extends MainFrame {
             addMenuItem("Modify/Replace", "Replace mode", KeyEvent.VK_R, "onReplace");
             addMenuItem("Modify/Xor", "XOR mode", KeyEvent.VK_X, "onXor");
             addMenuItem("Modify/Impact", "Show/hide impacts", KeyEvent.VK_I, "onImpact");
-            //addMenuItem("Modify/Colors", "Colors", KeyEvent.VK_C, "onColors");
 
             addSubMenu("Action", KeyEvent.VK_A);
             addMenuItem("Action/Init", "Init field", KeyEvent.VK_I, "onInit");
@@ -54,13 +53,12 @@ public class MainWindow extends MainFrame {
 
             addToolBarButton("File/New", "New.png");
             addToolBarButton("File/Open...", "Open.png");
-            addToolBarButton("File/Save", "Save.png");
+            addToolBarButton("File/Save as...", "Save.png");
             addToolBarSeparator();
             addToolBarButton("Modify/Options", "Options.png");
             addToolBarButton("Modify/Replace", "Replace.png");
             addToolBarButton("Modify/Xor", "Xor.png");
             addToolBarButton("Modify/Impact", "Impact.png");
-            //addToolBarButton("Modify/Colors", "Colors.png");  //TODO?
             addToolBarSeparator();
             addToolBarButton("Action/Init", "Init.png");
             addToolBarButton("Action/Next", "Next.png");
@@ -72,20 +70,20 @@ public class MainWindow extends MainFrame {
             add(hexagonGrid);
 
             statusBar = new JPanel();
-            status = new JLabel("Ready");        //TODO: hardcode as a constant
+            status = new JLabel(READY);
             statusBar.add(status);
             add(statusBar, BorderLayout.PAGE_END);
+
+            scrollPane = new JScrollPane(hexagonGrid, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setPreferredSize(new Dimension(800, 600));
+
+            hexagonGrid.setPreferredSize(new Dimension(hexagonGrid.width, hexagonGrid.height));
+
+            add(scrollPane);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        this.setPreferredSize(new Dimension(hexagonGrid.width - 50, hexagonGrid.height + 50));
-
-        scrollPane = new JScrollPane(hexagonGrid, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setWheelScrollingEnabled(true);
-
-        add(scrollPane);
 
         MouseListener ml = new MouseListener() {
             @Override
@@ -110,7 +108,7 @@ public class MainWindow extends MainFrame {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                status.setText("Ready");        //TODO: current state of game
+                status.setText(READY);
             }
         };
 
@@ -121,24 +119,38 @@ public class MainWindow extends MainFrame {
         dialog = new JDialog(this, "Options", true);
         hexagonGrid.initDialog(dialog);
         dialog.setLocationRelativeTo(this);
+        pack();
     }
 
-    public void onNew() {       //TODO
-        int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (res == JOptionPane.YES_OPTION) saveFile();
+    public void onNew() {
+        if (hexagonGrid.isChanged) {
+            int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (res == JOptionPane.YES_OPTION) saveFile();
+        }
         if (hexagonGrid.isRunning) hexagonGrid.switchRun();
-        //TODO
+        hexagonGrid.setN(15);
+        hexagonGrid.setM(10);
+        hexagonGrid.setHexSize(30);
+        hexagonGrid.setThickness(1);
+        hexagonGrid.setImpactShown(false);
+        hexagonGrid.initGrid();
+        hexagonGrid.setPreferredSize(new Dimension(hexagonGrid.width, hexagonGrid.height));
+        dialog.setVisible(true);
     }
 
     public void onOpen() {
         hexagonGrid.isRunning = false;
-        int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (res == JOptionPane.YES_OPTION) saveFile();
-        loadFile();
-    }
-
-    public void onSave() {      //TODO
-        saveFile();
+        if (hexagonGrid.isChanged) {
+            int res = JOptionPane.showConfirmDialog(this, "Save game?", "Save", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (res == JOptionPane.YES_OPTION) saveFile();
+        }
+        try {
+            loadFile();
+            hexagonGrid.initDialog(dialog);
+            hexagonGrid.setPreferredSize(new Dimension(hexagonGrid.width, hexagonGrid.height));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "File format is unfamiliar", "Wrong file", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void onSaveAs() {
@@ -149,7 +161,7 @@ public class MainWindow extends MainFrame {
         System.exit(0);
     }
 
-    public void onOptions() {   //TODO
+    public void onOptions() {
         dialog.setVisible(true);
     }
 
@@ -165,21 +177,18 @@ public class MainWindow extends MainFrame {
         hexagonGrid.switchImpact();
     }
 
-    public void onColors() {   //TODO ?
-    }
-
     public void onInit() {
-        hexagonGrid.init();
+        hexagonGrid.reset();
     }
 
     public void onNext() {
-        if (!status.getText().equals("Running..."))         //TODO: hardcode as a constant
+        if (!status.getText().equals(RUNNING))
             hexagonGrid.nextStep();
     }
 
     public void onRun() {
-        if (status.getText().equals("Running...")) status.setText("Paused");  //TODO: hardcode as a constant
-        else status.setText("Running...");
+        if (status.getText().equals(RUNNING)) status.setText(PAUSED);
+        else status.setText(RUNNING);
         hexagonGrid.switchRun();
     }
 
@@ -221,7 +230,7 @@ public class MainWindow extends MainFrame {
         } else return;
 
         try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(m + " " + n + "\n");
+            writer.write(n + " " + m + "\n");
             writer.write(thickness + "\n");
             writer.write(size + " " + "\n");
             writer.write(aliveCells.size() + "\n");
@@ -260,8 +269,8 @@ public class MainWindow extends MainFrame {
                 }
             }
 
-            m = params[0];
-            n = params[1];
+            n = params[0];
+            m = params[1];
             thick = params[2];
             size = params[3];
             cellNum = params[4];
@@ -270,6 +279,7 @@ public class MainWindow extends MainFrame {
             hexagonGrid.setM(m);
             hexagonGrid.setHexSize(size);
             hexagonGrid.setThickness(thick);
+            hexagonGrid.setImpactShown(false);
 
             hexagonGrid.initGrid();
 
@@ -281,7 +291,7 @@ public class MainWindow extends MainFrame {
                     line = line.trim();
                     String[] split = line.split(" ");
                     int x = Integer.parseInt(split[0]), y = Integer.parseInt(split[1]);
-                    if (x >= m || y >= n) {
+                    if (x >= n || y >= m) {
                         JOptionPane.showMessageDialog(this, "Wrong file params", "File Error", JOptionPane.ERROR_MESSAGE);
                     }
                     hexagonGrid.setAlive(hexagonGrid.grid[x][y], false);
