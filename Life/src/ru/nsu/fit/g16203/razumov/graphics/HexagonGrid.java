@@ -19,6 +19,7 @@ public class HexagonGrid extends JPanel {
     private static final int MAX_W = 3840, MAX_H = 2160;
 
     private BufferedImage image;
+    private BufferedImage impactImage;
 
     static final int BACKGROUND_COLOR = Color.WHITE.getRGB();
     static final int ALIVE_COLOR = Color.GREEN.getRGB();
@@ -26,6 +27,7 @@ public class HexagonGrid extends JPanel {
 
     private boolean replaceMode;
     private boolean isImpactShown;
+
 
     public boolean isChanged;
 

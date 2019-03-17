@@ -24,7 +24,7 @@ class Hexagon extends JPanel {
 
     int currentColorRGB;
 
-    private final int h, w;
+    private final int h, w, size;
 
     private BufferedImage imageGrid;
 
@@ -37,6 +37,7 @@ class Hexagon extends JPanel {
 
         this.h = 2 * size;
         this.w = (int) (Math.sqrt(3) * size);
+        this.size = size;
 
         this.thickness = thickness;
 
@@ -252,20 +253,30 @@ class Hexagon extends JPanel {
     void showImpact() {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(Color.RED);
-        g2d.setFont(new Font("", Font.BOLD, 14));
+        int fontSize = this.size * 3 / 4;
+        g2d.setFont(new Font("", Font.BOLD, fontSize));
+        FontMetrics fontMetrics = g2d.getFontMetrics();
         String s = new DecimalFormat("0.#").format(impact);
-        if (impact == 0.0) g2d.drawString(s, center.x, center.y + h / 5);
-        else g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
+
+        int hOffset = fontSize * 2 / 5;
+        int wOffset = fontMetrics.stringWidth(s) / 2;
+
+        g2d.drawString(s, (float) (center.x - wOffset), center.y + hOffset);
         g2d.dispose();
     }
 
     void hideImpact() {
         Graphics2D g2d = imageGrid.createGraphics();
         g2d.setPaint(currentColorRGB == ALIVE_COLOR ? Color.GREEN : Color.GRAY);
-        g2d.setFont(new Font("", Font.BOLD, 14));
+        int fontSize = this.size * 3 / 4;
+        g2d.setFont(new Font("", Font.BOLD, fontSize));
+        FontMetrics fontMetrics = g2d.getFontMetrics();
         String s = new DecimalFormat("0.#").format(impact);
-        if (impact == 0.0) g2d.drawString(s, center.x, center.y + h / 5);
-        else g2d.drawString(s, (float) (center.x - w / 2.5), center.y + h / 5);
+
+        int hOffset = fontSize * 2 / 5;
+        int wOffset = fontMetrics.stringWidth(s) / 2;
+
+        g2d.drawString(s, (float) (center.x - wOffset), center.y + hOffset);
         g2d.dispose();
     }
 

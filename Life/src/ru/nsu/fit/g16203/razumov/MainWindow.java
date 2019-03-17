@@ -250,7 +250,6 @@ public class MainWindow extends MainFrame {
         int n, m, size, thick;
         int cellNum;
         File file;
-        String userDir = System.getProperty("user.home");
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(getDataDirectory());
 
