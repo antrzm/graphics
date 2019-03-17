@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 
 public class MainWindow extends MainFrame {
 
@@ -249,7 +250,9 @@ public class MainWindow extends MainFrame {
         int n, m, size, thick;
         int cellNum;
         File file;
+        String userDir = System.getProperty("user.home");
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(getDataDirectory());
 
         int ret = fileChooser.showOpenDialog(this);
         if (ret == JFileChooser.APPROVE_OPTION) {
@@ -301,6 +304,19 @@ public class MainWindow extends MainFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /*Based on same name method from project from nsucgcourse.github.io*/
+    private static File getDataDirectory() {
+        File dataDirectory = new File("../").getParentFile();
+        if(dataDirectory == null || !dataDirectory.exists()) dataDirectory = new File(".");
+        for (File f : Objects.requireNonNull(dataDirectory.listFiles())) {
+            if (f.isDirectory() && f.getName().endsWith("Data")) {
+                dataDirectory = f;
+                break;
+            }
+        }
+        return dataDirectory;
     }
 
     public static void main(String[] args) {
