@@ -12,7 +12,7 @@ import static ru.nsu.fit.g16203.razumov.graphics.HexagonGrid.DEAD_COLOR;
 
 class Hexagon extends JPanel {
 
-    private int gridX, gridY;
+    public int gridX, gridY;
     private Point center;
     private boolean isOddRow;
 
@@ -256,7 +256,7 @@ class Hexagon extends JPanel {
         int fontSize = this.size * 3 / 4;
         g2d.setFont(new Font("", Font.BOLD, fontSize));
         FontMetrics fontMetrics = g2d.getFontMetrics();
-        String s = new DecimalFormat("0.#").format(impact);
+        String s = new DecimalFormat("0.#").format(Math.abs(impact));
 
         int hOffset = fontSize * 2 / 5;
         int wOffset = fontMetrics.stringWidth(s) / 2;
@@ -271,7 +271,7 @@ class Hexagon extends JPanel {
         int fontSize = this.size * 3 / 4;
         g2d.setFont(new Font("", Font.BOLD, fontSize));
         FontMetrics fontMetrics = g2d.getFontMetrics();
-        String s = new DecimalFormat("0.#").format(impact);
+        String s = new DecimalFormat("0.#").format(Math.abs(impact));
 
         int hOffset = fontSize * 2 / 5;
         int wOffset = fontMetrics.stringWidth(s) / 2;

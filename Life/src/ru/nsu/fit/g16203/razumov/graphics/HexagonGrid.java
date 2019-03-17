@@ -19,7 +19,6 @@ public class HexagonGrid extends JPanel {
     private static final int MAX_W = 3840, MAX_H = 2160;
 
     private BufferedImage image;
-    private BufferedImage impactImage;
 
     static final int BACKGROUND_COLOR = Color.WHITE.getRGB();
     static final int ALIVE_COLOR = Color.GREEN.getRGB();
@@ -27,7 +26,6 @@ public class HexagonGrid extends JPanel {
 
     private boolean replaceMode;
     private boolean isImpactShown;
-
 
     public boolean isChanged;
 
@@ -38,6 +36,7 @@ public class HexagonGrid extends JPanel {
     public boolean isRunning;
 
     public Hexagon[][] grid;
+    private List<Point> aliveGrid = new ArrayList<>();
 
     private Integer n;
     private Integer m;
@@ -45,8 +44,6 @@ public class HexagonGrid extends JPanel {
     private Integer thickness;
 
     public int width, height;
-
-    private int w, h;
 
     public HexagonGrid(int n, int m) {
 
@@ -76,9 +73,9 @@ public class HexagonGrid extends JPanel {
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null) {
                     if (hex.isDead) {
-                        setAlive(hex, isImpactShown);
+                        setAlive(hex);
                     } else if (!replaceMode) {
-                        setDead(hex, isImpactShown);
+                        setDead(hex);
                     }
                     repaint();
                 }
@@ -91,11 +88,11 @@ public class HexagonGrid extends JPanel {
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null && hex != prevHex) {
                     if (replaceMode && hex.isDead) {
-                        setAlive(hex, isImpactShown);
+                        setAlive(hex);
                     } else if (!replaceMode && !hex.isDead) {
-                        setDead(hex, isImpactShown);
+                        setDead(hex);
                     } else if (!replaceMode && hex.isDead) {
-                        setAlive(hex, isImpactShown);
+                        setAlive(hex);
                     }
                     prevHex = hex;
                     repaint();
@@ -116,8 +113,8 @@ public class HexagonGrid extends JPanel {
     }
 
     public void initGrid() {
-        this.h = 2 * hexSize;
-        this.w = (int) (Math.sqrt(3) * hexSize);
+        int h = 2 * hexSize;
+        int w = (int) (Math.sqrt(3) * hexSize);
 
         grid = new Hexagon[n][m];
 
@@ -134,6 +131,13 @@ public class HexagonGrid extends JPanel {
             for (int j = 0; j < m; j++) {
                 if (i == n - 1 && j % 2 != 0) continue;
                 grid[i][j] = new Hexagon(i, j, image, hexSize, thickness);
+            }
+        }
+        for (Point p : aliveGrid) {
+            try {
+                Hexagon hex = grid[p.x][p.y];
+                this.setAlive(hex);
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }
         repaint();
@@ -160,7 +164,7 @@ public class HexagonGrid extends JPanel {
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
                 if (grid[i][j] != null) {
-                    if (grid[i][j].currentColorRGB != DEAD_COLOR) setDead(grid[i][j], isImpactShown);
+                    if (grid[i][j].currentColorRGB != DEAD_COLOR) setDead(grid[i][j]);
                     grid[i][j].setImpact(0, isImpactShown);
                 }
         repaint();
@@ -181,8 +185,8 @@ public class HexagonGrid extends JPanel {
             for (int j = 0; j < m; j++)
                 if (grid[i][j] != null)
                     updateHexImpact(grid[i][j], toKillList, toBeBornList);
-        for (Hexagon hex : toBeBornList) setAlive(hex, isImpactShown);
-        for (Hexagon hex : toKillList) setDead(hex, isImpactShown);
+        for (Hexagon hex : toBeBornList) setAlive(hex);
+        for (Hexagon hex : toKillList) setDead(hex);
     }
 
     private void updateHexImpact(Hexagon hexagon, List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
@@ -221,6 +225,11 @@ public class HexagonGrid extends JPanel {
     }
 
     public void setAlive(Hexagon hex, boolean isImpactShown) {
+        this.isImpactShown = isImpactShown;
+        setAlive(hex);
+    }
+
+    private void setAlive(Hexagon hex) {
         if (!isChanged) isChanged = true;
         if (isImpactShown) {
             hex.hideImpact();
@@ -239,9 +248,11 @@ public class HexagonGrid extends JPanel {
                 grid[n2.x][n2.y].setImpact(impact + sndImpact, isImpactShown);
             }
         }
+        if (!aliveGrid.contains(new Point(hex.gridX, hex.gridY)))
+            aliveGrid.add(new Point(hex.gridX, hex.gridY));
     }
 
-    private void setDead(Hexagon hex, boolean isImpactShown) {
+    private void setDead(Hexagon hex) {
         if (!isChanged) isChanged = true;
         if (hex.isDead) return;
         if (!isImpactShown) {
@@ -430,13 +441,15 @@ public class HexagonGrid extends JPanel {
             if (!sizeField.getText().isEmpty()) {
                 try {
                     size = sliderSize.getValue();
-                } catch (NumberFormatException ignored){}
+                } catch (NumberFormatException ignored) {
+                }
             }
 
             if (!thicknessField.getText().isEmpty()) {
-                try{
-                thickness = sliderThickness.getValue();
-                } catch (NumberFormatException ignored){}
+                try {
+                    thickness = sliderThickness.getValue();
+                } catch (NumberFormatException ignored) {
+                }
             }
 
             if (!fstImpactText.getText().isEmpty()) {
@@ -595,13 +608,7 @@ public class HexagonGrid extends JPanel {
     }
 
     public List<Point> getAliveGrid() {
-        List<Point> alive = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == null) continue;
-                if (!grid[i][j].isDead) alive.add(new Point(i, j));
-            }
-        return alive;
+        return aliveGrid;
     }
 
     public void setImpactShown(boolean impactShown) {
