@@ -22,7 +22,9 @@ public class MainWindow extends MainFrame {
 
     private JPanel statusBar;
     private JDialog dialog;
-    JScrollPane scrollPane;
+    private JScrollPane scrollPane;
+
+    private File dataDirectory;
 
     private MainWindow() {
         super(800, 600, "Conway's Game of Life");
@@ -256,6 +258,7 @@ public class MainWindow extends MainFrame {
         int ret = fileChooser.showOpenDialog(this);
         if (ret == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
+            dataDirectory = file;
         } else return;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -306,13 +309,15 @@ public class MainWindow extends MainFrame {
     }
 
     /*Based on same name method from project from nsucgcourse.github.io*/
-    private static File getDataDirectory() {
-        File dataDirectory = new File("../").getParentFile();
-        if(dataDirectory == null || !dataDirectory.exists()) dataDirectory = new File(".");
-        for (File f : Objects.requireNonNull(dataDirectory.listFiles())) {
-            if (f.isDirectory() && f.getName().endsWith("Data")) {
-                dataDirectory = f;
-                break;
+    private File getDataDirectory() {
+        if (dataDirectory == null) {
+            dataDirectory = new File("../").getParentFile();
+            if (dataDirectory == null || !dataDirectory.exists()) dataDirectory = new File(".");
+            for (File f : Objects.requireNonNull(dataDirectory.listFiles())) {
+                if (f.isDirectory() && f.getName().endsWith("Data")) {
+                    dataDirectory = f;
+                    break;
+                }
             }
         }
         return dataDirectory;
