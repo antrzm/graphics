@@ -281,6 +281,8 @@ class Hexagon extends JPanel {
     }
 
     void setImpact(double newVal, boolean isShown) {
+        if (gridY == 4 && gridX == 14)
+            System.out.println();
         if (isShown) {
             hideImpact();
             this.impact = newVal;

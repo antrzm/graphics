@@ -26,16 +26,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="261" column="22" lean-forward="true" selection-start-line="261" selection-start-column="22" selection-end-line="261" selection-end-column="22" />
+            <state relative-caret-position="125">
+              <caret line="189" selection-start-line="189" selection-end-line="189" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5859#5860#0" expanded="true" />
                 <element signature="e#5885#5886#0" expanded="true" />
-                <element signature="method#onNext#0;class#MainWindow#0" />
                 <element signature="method#onRun#0;class#MainWindow#0" />
                 <element signature="method#onToolBar#0;class#MainWindow#0" />
                 <element signature="method#onStatusBar#0;class#MainWindow#0" />
@@ -46,14 +45,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HexagonGrid.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="46" column="58" lean-forward="true" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HexagonGrid.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="134" column="9" lean-forward="true" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
+            <state relative-caret-position="-181">
+              <caret line="208" selection-start-line="208" selection-end-line="208" />
               <folding>
                 <element signature="e#1817#2338#0" expanded="true" />
                 <element signature="e#2337#2338#0" expanded="true" />
+                <element signature="e#3387#4326#0" />
                 <element signature="e#4388#4389#0" expanded="true" />
                 <element signature="e#4457#4458#0" expanded="true" />
                 <element signature="e#5149#5150#0" expanded="true" />
@@ -65,7 +77,6 @@
                 <element signature="e#6189#6779#0" />
                 <element signature="e#8430#8629#0" />
                 <element signature="e#8635#20138#0" />
-                <element signature="e#14534#19661#0" />
                 <element signature="e#20144#20404#0" />
                 <element signature="e#20797#20798#0" expanded="true" />
                 <element signature="e#20821#20822#0" expanded="true" />
@@ -92,21 +103,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArrayList.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/util/ArrayList.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="900" selection-start-line="900" selection-end-line="900" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Hexagon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2907">
-              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+            <state relative-caret-position="295">
+              <caret line="283" column="38" lean-forward="true" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
               <folding>
+                <element signature="method#initNeighbours#0;class#Hexagon#0" />
+                <element signature="method#drawEvenRowHex#0;class#Hexagon#0" />
                 <element signature="method#spanSelf#0;class#Hexagon#0" />
                 <element signature="method#isInside#0;class#Hexagon#0" />
               </folding>
@@ -154,9 +158,9 @@
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/game/GameOfLife.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Window.form" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java" />
       </list>
     </option>
   </component>
@@ -293,12 +297,12 @@
       <workItem from="1552642591833" duration="6827000" />
       <workItem from="1552660496587" duration="9410000" />
       <workItem from="1552714783131" duration="7181000" />
-      <workItem from="1552821515288" duration="9206000" />
+      <workItem from="1552821515288" duration="11314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182660000" />
+    <option name="totallyTimeSpent" value="184768000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1552" height="832" extended-state="0" />
@@ -372,7 +376,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="168" />
+      <option name="time" value="179" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -712,16 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1085">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/BasicStroke.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -740,17 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2907">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
-          <folding>
-            <element signature="method#spanSelf#0;class#Hexagon#0" />
-            <element signature="method#isInside#0;class#Hexagon#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -758,13 +741,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="189" selection-start-line="189" selection-end-line="189" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5859#5860#0" expanded="true" />
+            <element signature="e#5885#5886#0" expanded="true" />
+            <element signature="method#onRun#0;class#MainWindow#0" />
+            <element signature="method#onToolBar#0;class#MainWindow#0" />
+            <element signature="method#onStatusBar#0;class#MainWindow#0" />
+            <element signature="method#onAbout#0;class#MainWindow#0" />
+            <element signature="method#saveFile#0;class#MainWindow#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="46" column="58" lean-forward="true" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="283" column="38" lean-forward="true" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
+          <folding>
+            <element signature="method#initNeighbours#0;class#Hexagon#0" />
+            <element signature="method#drawEvenRowHex#0;class#Hexagon#0" />
+            <element signature="method#spanSelf#0;class#Hexagon#0" />
+            <element signature="method#isInside#0;class#Hexagon#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="134" column="9" lean-forward="true" selection-start-line="134" selection-start-column="9" selection-end-line="134" selection-end-column="9" />
+        <state relative-caret-position="-181">
+          <caret line="208" selection-start-line="208" selection-end-line="208" />
           <folding>
             <element signature="e#1817#2338#0" expanded="true" />
             <element signature="e#2337#2338#0" expanded="true" />
+            <element signature="e#3387#4326#0" />
             <element signature="e#4388#4389#0" expanded="true" />
             <element signature="e#4457#4458#0" expanded="true" />
             <element signature="e#5149#5150#0" expanded="true" />
@@ -776,7 +800,6 @@
             <element signature="e#6189#6779#0" />
             <element signature="e#8430#8629#0" />
             <element signature="e#8635#20138#0" />
-            <element signature="e#14534#19661#0" />
             <element signature="e#20144#20404#0" />
             <element signature="e#20797#20798#0" expanded="true" />
             <element signature="e#20821#20822#0" expanded="true" />
@@ -798,24 +821,6 @@
             <element signature="e#21381#21382#0" expanded="true" />
             <element signature="e#21436#21437#0" expanded="true" />
             <element signature="e#21479#21480#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="261" column="22" lean-forward="true" selection-start-line="261" selection-start-column="22" selection-end-line="261" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5859#5860#0" expanded="true" />
-            <element signature="e#5885#5886#0" expanded="true" />
-            <element signature="method#onNext#0;class#MainWindow#0" />
-            <element signature="method#onRun#0;class#MainWindow#0" />
-            <element signature="method#onToolBar#0;class#MainWindow#0" />
-            <element signature="method#onStatusBar#0;class#MainWindow#0" />
-            <element signature="method#onAbout#0;class#MainWindow#0" />
-            <element signature="method#saveFile#0;class#MainWindow#0" />
           </folding>
         </state>
       </provider>

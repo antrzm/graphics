@@ -285,8 +285,8 @@ public class MainWindow extends MainFrame {
             hexagonGrid.setHexSize(size);
             hexagonGrid.setThickness(thick);
             hexagonGrid.setImpactShown(false);
-
             hexagonGrid.initGrid();
+            hexagonGrid.initDialog(dialog);
 
             for (int j = 0; j < cellNum; j++) {
                 if (line != null) {

@@ -133,15 +133,16 @@ public class HexagonGrid extends JPanel {
                 grid[i][j] = new Hexagon(i, j, image, hexSize, thickness);
             }
         }
+        if (isImpactShown) switchImpact();
         for (Point p : aliveGrid) {
             try {
                 Hexagon hex = grid[p.x][p.y];
-                this.setAlive(hex);
+                if (hex != null)
+                    this.setAlive(hex);
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }
         repaint();
-        if (isImpactShown) switchImpact();
     }
 
     @Override
@@ -165,7 +166,7 @@ public class HexagonGrid extends JPanel {
             for (int j = 0; j < m; j++)
                 if (grid[i][j] != null) {
                     if (grid[i][j].currentColorRGB != DEAD_COLOR) setDead(grid[i][j]);
-                    grid[i][j].setImpact(0, isImpactShown);
+                    grid[i][j].setImpact(0.0, isImpactShown);
                 }
         repaint();
     }
@@ -190,12 +191,12 @@ public class HexagonGrid extends JPanel {
     }
 
     private void updateHexImpact(Hexagon hexagon, List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
-        if (hexagon.impact == 2)
+        if (hexagon.gridY == 4 && hexagon.gridX == 14)
             System.out.println();
 
-        if (hexagon.isDead && hexagon.impact >= birthBegin && hexagon.impact <= birthEnd)
+        if (hexagon.isDead && Math.round(hexagon.impact * 10) / 10.0 >= birthBegin && Math.round(hexagon.impact * 10) / 10.0 <= birthEnd)
             toBeBornList.add(hexagon);
-        else if (!hexagon.isDead && hexagon.impact < liveBegin || hexagon.impact > liveEnd)
+        else if (!hexagon.isDead && Math.round(hexagon.impact * 10) / 10.0 < liveBegin || Math.round(hexagon.impact * 10) / 10.0 > liveEnd)
             toKillList.add(hexagon);
     }
 
