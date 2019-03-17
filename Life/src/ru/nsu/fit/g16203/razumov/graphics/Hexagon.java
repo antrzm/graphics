@@ -137,8 +137,8 @@ class Hexagon extends JPanel {
             bresenham(x1, y1, x2, y2);
             bresenham(x2, y2, x3, y3);
             bresenham(x3, y3, x4, y4);
-            bresenham(x5, y5, x4, y4);
-            bresenham(x6, y6, x5, y5);
+            bresenham(x4, y4, x5, y5);
+            bresenham(x5, y5, x6, y6);
             bresenham(x6, y6, x1, y1);
         } else {
             Graphics2D g = this.imageGrid.createGraphics();
@@ -159,28 +159,31 @@ class Hexagon extends JPanel {
 
         int x = x1, y = y1;
         int dx = Math.abs(x2 - x1), dy = Math.abs(y2 - y1);
-        int sx = Integer.compare(x2 - x1, 0);
-        int sy = Integer.compare(y2 - y1, 0);
-        int err = 2 * dy - dx;
-        boolean change = false;
+        int sx = Integer.compare(x2 - x1, 0), sy = Integer.compare(y2 - y1, 0);
         if (dy > dx) {
-            int z = dx;
-            dx = dy;
-            dy = z;
-            change = true;
-        }
-        imageGrid.setRGB(x, y, Color.BLACK.getRGB());
-        for (int k = 1; k <= (dx + dy); k++) {
-            if (err < dx) {
-                if (change) y += sy;
-                else x += sx;
-                err += 2 * dy;
-            } else {
-                if (change) x += sx;
-                else y = y + sy;
-                err -= 2 * dx;
+            int err = -dy;
+            for (int i = 0; i < dy; i++) {
+                err += 2 * dx;
+                y += sy;
+
+                if (err > 0) {
+                    err -= 2 * dy;
+                    x += sx;
+                }
+                imageGrid.setRGB(x, y, Color.BLACK.getRGB());
             }
-            imageGrid.setRGB(x, y, Color.BLACK.getRGB());
+        } else {
+            int err = -dx;
+            for (int i = 0; i < dx; i++) {
+                err += 2 * dy;
+                x += sx;
+
+                if (err > 0) {
+                    err -= 2 * dx;
+                    y += sy;
+                }
+                imageGrid.setRGB(x, y, Color.BLACK.getRGB());
+            }
         }
     }
 
