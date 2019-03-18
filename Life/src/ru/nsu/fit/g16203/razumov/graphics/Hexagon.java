@@ -96,11 +96,11 @@ class Hexagon extends JPanel {
     private void drawEvenRowHex() {
         int off = 10;   //offset
 
-        int wx = w * this.gridX + w / 2, hy = (int) (h * (this.gridY + 1) / 2 * 1.5) - 3 * h / 4;
+        int wx = w * this.gridX + w / 2, hy = gridY * (h * 3 / 4);
         this.center = new Point(off + w * gridX + w, off + hy + h / 2);
 
-        int x1 = off + wx, x2 = off + wx + w / 2, x3 = off + wx + w, x4 = off + wx + w, x5 = off + wx + w / 2, x6 = off + wx;
-        int y1 = off + hy + h / 4, y2 = off + hy, y3 = off + hy + h / 4, y4 = off + hy + 3 * h / 4, y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
+        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w, x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
+        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0), y4 = (int) (off + hy + 3 * h / 4.0), y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
 
         if (thickness == 1) {
             bresenham(x1, y1, x2, y2);
@@ -191,43 +191,39 @@ class Hexagon extends JPanel {
         Stack<Point> toSpanDots = new Stack<>();
         toSpanDots.add(new Point(this.center.x - w / 4, this.center.y));
 
-        try {
-            boolean upperSpanTrigger, lowerSpanTrigger;
+        boolean upperSpanTrigger, lowerSpanTrigger;
 
-            while (!toSpanDots.empty()) {
+        while (!toSpanDots.empty()) {
 
-                Point dot = toSpanDots.pop();
-                int x = dot.x, y = dot.y;
+            Point dot = toSpanDots.pop();
+            int x = dot.x, y = dot.y;
 
-                upperSpanTrigger = true;
-                lowerSpanTrigger = true;
+            upperSpanTrigger = true;
+            lowerSpanTrigger = true;
 
-                while (imageGrid.getRGB(x, y) == currentColorRGB) x--;     //going to left border of hexagon
+            while (imageGrid.getRGB(x, y) == currentColorRGB) x--;     //going to left border of hexagon
 
-                x++;                                                   //making x is the first pixel from border
+            x++;                                                   //making x is the first pixel from border
 
-                while (imageGrid.getRGB(x, y) == currentColorRGB) {
-                    imageGrid.setRGB(x, y, color);
+            while (imageGrid.getRGB(x, y) == currentColorRGB) {
+                imageGrid.setRGB(x, y, color);
 
-                    if (imageGrid.getRGB(x, y + 1) == currentColorRGB) {
-                        if (upperSpanTrigger) {
-                            toSpanDots.push(new Point(x, y + 1));
-                            upperSpanTrigger = false;
-                        }
-                    } else upperSpanTrigger = true;
+                if (imageGrid.getRGB(x, y + 1) == currentColorRGB) {
+                    if (upperSpanTrigger) {
+                        toSpanDots.push(new Point(x, y + 1));
+                        upperSpanTrigger = false;
+                    }
+                } else upperSpanTrigger = true;
 
-                    if (imageGrid.getRGB(x, y - 1) == currentColorRGB) {
-                        if (lowerSpanTrigger) {
-                            toSpanDots.push(new Point(x, y - 1));
-                            lowerSpanTrigger = false;
-                        }
-                    } else lowerSpanTrigger = true;
+                if (imageGrid.getRGB(x, y - 1) == currentColorRGB) {
+                    if (lowerSpanTrigger) {
+                        toSpanDots.push(new Point(x, y - 1));
+                        lowerSpanTrigger = false;
+                    }
+                } else lowerSpanTrigger = true;
 
-                    x++;
-                }
+                x++;
             }
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-            return;
         }
         if (color == ALIVE_COLOR) this.isDead = false;
         if (color == DEAD_COLOR) this.isDead = true;

@@ -42,14 +42,11 @@ public class MainFrame extends JFrame {
         if (icon != null)
             item.setIcon(new ImageIcon(getClass().getResource("resources/" + icon), title));
         final Method method = getClass().getMethod(actionMethod);
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    method.invoke(MainFrame.this);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        item.addActionListener(evt -> {
+            try {
+                method.invoke(MainFrame.this);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
         return item;

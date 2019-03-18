@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -70,6 +72,7 @@ public class HexagonGrid extends JPanel {
         addMouseListener(new MouseAdapter() {                               //for 1 click
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (isRunning) return;
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null) {
                     if (hex.isDead) {
@@ -85,6 +88,7 @@ public class HexagonGrid extends JPanel {
         addMouseMotionListener(new MouseMotionListener() {                 //for multiple hexagons
             @Override
             public void mouseDragged(MouseEvent e) {
+                if (isRunning) return;
                 Hexagon hex = getHexAt(e.getX(), e.getY());
                 if (hex != null && hex != prevHex) {
                     if (replaceMode && hex.isDead) {
@@ -194,9 +198,13 @@ public class HexagonGrid extends JPanel {
         if (hexagon.gridY == 4 && hexagon.gridX == 14)
             System.out.println();
 
-        if (hexagon.isDead && Math.round(hexagon.impact * 10) / 10.0 >= birthBegin && Math.round(hexagon.impact * 10) / 10.0 <= birthEnd)
+        BigDecimal impactBigDec = new BigDecimal(hexagon.impact);
+        impactBigDec = impactBigDec.setScale(1,RoundingMode.HALF_UP);
+        double impact = impactBigDec.doubleValue();
+
+        if (hexagon.isDead && impact >= birthBegin && impact <= birthEnd)
             toBeBornList.add(hexagon);
-        else if (!hexagon.isDead && Math.round(hexagon.impact * 10) / 10.0 < liveBegin || Math.round(hexagon.impact * 10) / 10.0 > liveEnd)
+        else if (!hexagon.isDead && impact < liveBegin || impact > liveEnd)
             toKillList.add(hexagon);
     }
 
@@ -316,7 +324,7 @@ public class HexagonGrid extends JPanel {
         sizesNamesPanel.add(sizeLabel);
         JTextField sizeField = new JTextField(this.hexSize.toString());
         sizesValuesPanel.add(sizeField);
-        JSlider sliderSize = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+        JSlider sliderSize = new JSlider(JSlider.HORIZONTAL, 10, 100, 10);
         sliderSize.setValue(hexSize);
         slidersPanel.add(sliderSize);
 
