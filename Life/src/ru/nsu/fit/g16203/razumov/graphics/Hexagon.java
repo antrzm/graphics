@@ -96,7 +96,7 @@ class Hexagon extends JPanel {
     private void drawEvenRowHex() {
         int off = 10;   //offset
 
-        int wx = w * this.gridX + w / 2, hy = gridY * (h * 3 / 4);
+        int wx = w * this.gridX + w / 2, hy = (int) (gridY * (h * 3.0 / 4.0));
         this.center = new Point(off + w * gridX + w, off + hy + h / 2);
 
         int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w, x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
@@ -152,11 +152,9 @@ class Hexagon extends JPanel {
             g.drawLine(x6, y6, x1, y1);
             g.setStroke(new BasicStroke(1));
         }
-        System.out.println();
     }
 
     private void bresenham(int x1, int y1, int x2, int y2) {
-
         int x = x1, y = y1;
         int dx = Math.abs(x2 - x1), dy = Math.abs(y2 - y1);
         int sx = Integer.compare(x2 - x1, 0), sy = Integer.compare(y2 - y1, 0);
@@ -188,8 +186,15 @@ class Hexagon extends JPanel {
     }
 
     void spanSelf(int color) {
+        spanFill(imageGrid, this.center.x - w / 4, this.center.y, color, currentColorRGB);
+        if (color == ALIVE_COLOR) this.isDead = false;
+        if (color == DEAD_COLOR) this.isDead = true;
+        this.currentColorRGB = color;
+    }
+
+    static void spanFill(BufferedImage image, int seedX, int seedY, int color, int currentColorRGB) {
         Stack<Point> toSpanDots = new Stack<>();
-        toSpanDots.add(new Point(this.center.x - w / 4, this.center.y));
+        toSpanDots.add(new Point(seedX, seedY));
 
         boolean upperSpanTrigger, lowerSpanTrigger;
 
@@ -201,21 +206,21 @@ class Hexagon extends JPanel {
             upperSpanTrigger = true;
             lowerSpanTrigger = true;
 
-            while (imageGrid.getRGB(x, y) == currentColorRGB) x--;     //going to left border of hexagon
+            while (image.getRGB(x, y) == currentColorRGB) x--;     //going to left border of hexagon
 
             x++;                                                   //making x is the first pixel from border
 
-            while (imageGrid.getRGB(x, y) == currentColorRGB) {
-                imageGrid.setRGB(x, y, color);
+            while (image.getRGB(x, y) == currentColorRGB) {
+                image.setRGB(x, y, color);
 
-                if (imageGrid.getRGB(x, y + 1) == currentColorRGB) {
+                if (image.getRGB(x, y + 1) == currentColorRGB) {
                     if (upperSpanTrigger) {
                         toSpanDots.push(new Point(x, y + 1));
                         upperSpanTrigger = false;
                     }
                 } else upperSpanTrigger = true;
 
-                if (imageGrid.getRGB(x, y - 1) == currentColorRGB) {
+                if (image.getRGB(x, y - 1) == currentColorRGB) {
                     if (lowerSpanTrigger) {
                         toSpanDots.push(new Point(x, y - 1));
                         lowerSpanTrigger = false;
@@ -225,9 +230,6 @@ class Hexagon extends JPanel {
                 x++;
             }
         }
-        if (color == ALIVE_COLOR) this.isDead = false;
-        if (color == DEAD_COLOR) this.isDead = true;
-        this.currentColorRGB = color;
     }
 
     boolean isInside(int x, int y) {
@@ -280,8 +282,6 @@ class Hexagon extends JPanel {
     }
 
     void setImpact(double newVal, boolean isShown) {
-        if (gridY == 4 && gridX == 14)
-            System.out.println();
         if (isShown) {
             hideImpact();
             this.impact = newVal;

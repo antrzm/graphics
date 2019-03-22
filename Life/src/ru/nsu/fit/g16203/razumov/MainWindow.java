@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -285,6 +286,7 @@ public class MainWindow extends MainFrame {
             hexagonGrid.setHexSize(size);
             hexagonGrid.setThickness(thick);
             hexagonGrid.setImpactShown(false);
+            hexagonGrid.setAliveGrid(new ArrayList<>());
             hexagonGrid.initGrid();
             hexagonGrid.initDialog(dialog);
 

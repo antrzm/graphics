@@ -195,9 +195,6 @@ public class HexagonGrid extends JPanel {
     }
 
     private void updateHexImpact(Hexagon hexagon, List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
-        if (hexagon.gridY == 4 && hexagon.gridX == 14)
-            System.out.println();
-
         BigDecimal impactBigDec = new BigDecimal(hexagon.impact);
         impactBigDec = impactBigDec.setScale(1,RoundingMode.HALF_UP);
         double impact = impactBigDec.doubleValue();
@@ -622,5 +619,9 @@ public class HexagonGrid extends JPanel {
 
     public void setImpactShown(boolean impactShown) {
         isImpactShown = impactShown;
+    }
+
+    public void setAliveGrid(List<Point> aliveGrid) {
+        this.aliveGrid = aliveGrid;
     }
 }
