@@ -118,7 +118,7 @@ public class HexagonGrid extends JPanel {
 
     public void initGrid() {
         int h = 2 * hexSize;
-        int w = (int) (Math.sqrt(3) * hexSize);
+        double w = Math.sqrt(3) * hexSize;
 
         grid = new Hexagon[n][m];
 
@@ -126,7 +126,7 @@ public class HexagonGrid extends JPanel {
             for (int j = 0; j < height; j++)
                 image.setRGB(i, j, BACKGROUND_COLOR);   //erasing old grid
 
-        this.width = n * w + 20;
+        this.width = (int) (n * w + 20);
         this.height = m * h * 3 / 4 + 50;
 
         this.setPreferredSize(new Dimension(width, height));
@@ -196,7 +196,7 @@ public class HexagonGrid extends JPanel {
 
     private void updateHexImpact(Hexagon hexagon, List<Hexagon> toKillList, List<Hexagon> toBeBornList) {
         BigDecimal impactBigDec = new BigDecimal(hexagon.impact);
-        impactBigDec = impactBigDec.setScale(1,RoundingMode.HALF_UP);
+        impactBigDec = impactBigDec.setScale(1, RoundingMode.HALF_UP);
         double impact = impactBigDec.doubleValue();
 
         if (hexagon.isDead && impact >= birthBegin && impact <= birthEnd)
@@ -321,7 +321,7 @@ public class HexagonGrid extends JPanel {
         sizesNamesPanel.add(sizeLabel);
         JTextField sizeField = new JTextField(this.hexSize.toString());
         sizesValuesPanel.add(sizeField);
-        JSlider sliderSize = new JSlider(JSlider.HORIZONTAL, 10, 100, 10);
+        JSlider sliderSize = new JSlider(JSlider.HORIZONTAL, 12, 100, 30);
         sliderSize.setValue(hexSize);
         slidersPanel.add(sliderSize);
 

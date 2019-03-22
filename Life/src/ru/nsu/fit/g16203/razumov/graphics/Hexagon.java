@@ -24,7 +24,8 @@ class Hexagon extends JPanel {
 
     int currentColorRGB;
 
-    private final int h, w, size;
+    private final double h, w;
+    private final int size;
 
     private BufferedImage imageGrid;
 
@@ -35,8 +36,8 @@ class Hexagon extends JPanel {
         this.gridX = x;
         this.gridY = y;
 
-        this.h = (int) (2.0 * size);
-        this.w = (int) (Math.sqrt(3) * size);
+        this.h = 2.0 * size;
+        this.w = Math.sqrt(3) * size;
         this.size = size;
 
         this.thickness = thickness;
@@ -96,21 +97,19 @@ class Hexagon extends JPanel {
     private void drawOddRowHex() {
         int off = 10;   //offset
 
-        int wx = (int) (w * this.gridX + w / 2.0), hy = (int) (gridY * (h * 3.0 / 4.0));
-        this.center = new Point(off + w * gridX + w, (int) (off + hy + h / 2.0));
+        double wx = off + w * this.gridX + w / 2.0, hy = off + gridY * (h * 3.0 / 4.0);
+        this.center = new Point((int) (wx + w / 2.0), (int) (hy + h / 2.0));
 
-        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w,
-                x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
-        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0),
-                y4 = (int) (off + hy + 3 * h / 4.0), y5 = off + hy + h, y6 = (int) (off + hy + 3.0 * h / 4.0);
+        int x1 = (int) wx, x2 = (int) (wx + w / 2.0), x3 = (int) (wx + w), x4 = x3, x5 = x2, x6 = x1;
+        int y1 = (int) (hy + h / 4.0), y2 = (int) hy, y3 = y1, y4 = (int) (hy + 3.0 * h / 4.0), y5 = (int) (hy + h), y6 = y4;
 
         if (thickness == 1) {
-            bresenham(x2 + 1, y2, x1, y1);
-            bresenham(x2 + 1, y2, x3, y3);
+            bresenham(x1, y1, x2, y2);
+            bresenham(x2, y2, x3, y3);
             bresenham(x3, y3, x4, y4);
-            bresenham(x4, y4, x5 + 1, y5);
-            bresenham(x6, y6, x5 + 1, y5);
-            bresenham(x6, y6 + 1, x1, y1);
+            bresenham(x4, y4, x5, y5);
+            bresenham(x5, y5, x6, y6);
+            bresenham(x6, y6, x1, y1);
         } else {
             Graphics2D g = (Graphics2D) this.imageGrid.getGraphics();
             g.setPaint(Color.BLACK);
@@ -129,13 +128,11 @@ class Hexagon extends JPanel {
     private void drawEvenRowHex() {
         int off = 10;   //offset
 
-        int wx = w * this.gridX, hy = (int) ((h * this.gridY * 1.5) / 2.0);
-        this.center = new Point((int) (off + wx + w / 2.0), (int) (off + hy + h / 2.0));
+        double wx = off + w * this.gridX, hy = off + (1.5 * h * this.gridY) / 2.0;
+        this.center = new Point((int) (wx + w / 2.0), (int) (hy + h / 2.0));
 
-        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w,
-                x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
-        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0),
-                y4 = (int) (off + hy + 3.0 * h / 4.0), y5 = off + hy + h, y6 = (int) (off + hy + 3.0 * h / 4.0);
+        int x1 = (int) wx, x2 = (int) (wx + w / 2.0), x3 = (int) (wx + w), x4 = x3, x5 = x2, x6 = x1;
+        int y1 = (int) (hy + h / 4.0), y2 = (int) hy, y3 = y1, y4 = (int) (hy + 3.0 * h / 4.0), y5 = (int) (hy + h), y6 = y4;
 
         if (thickness == 1) {
             bresenham(x1, y1, x2, y2);
@@ -198,7 +195,7 @@ class Hexagon extends JPanel {
         this.currentColorRGB = color;
     }
 
-    static void spanFill(BufferedImage image, int seedX, int seedY, int color, int currentColorRGB) {
+    private static void spanFill(BufferedImage image, int seedX, int seedY, int color, int currentColorRGB) {
         Stack<Point> toSpanDots = new Stack<>();
         toSpanDots.add(new Point(seedX, seedY));
 
@@ -232,7 +229,6 @@ class Hexagon extends JPanel {
                         lowerSpanTrigger = false;
                     }
                 } else lowerSpanTrigger = true;
-
                 x++;
             }
         }
