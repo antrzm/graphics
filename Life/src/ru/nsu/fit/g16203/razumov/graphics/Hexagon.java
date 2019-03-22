@@ -14,7 +14,7 @@ class Hexagon extends JPanel {
 
     public int gridX, gridY;
     private Point center;
-    private boolean isOddRow;
+    private boolean isEvenRow;
 
     private int thickness;
 
@@ -35,7 +35,7 @@ class Hexagon extends JPanel {
         this.gridX = x;
         this.gridY = y;
 
-        this.h = 2 * size;
+        this.h = (int) (2.0 * size);
         this.w = (int) (Math.sqrt(3) * size);
         this.size = size;
 
@@ -44,7 +44,7 @@ class Hexagon extends JPanel {
         this.firstOrderNeighbours = new Point[6];
         this.secondOrderNeighbours = new Point[6];
 
-        this.isOddRow = y % 2 == 0;
+        this.isEvenRow = y % 2 == 0;
 
         initNeighbours();
 
@@ -54,15 +54,15 @@ class Hexagon extends JPanel {
 
         this.imageGrid = image;
 
-        if (isOddRow) drawOddRowHex();
-        else drawEvenRowHex();
+        if (isEvenRow) drawEvenRowHex();
+        else drawOddRowHex();
 
         spanSelf(DEAD_COLOR);
     }
 
     private void initNeighbours() {
         int x = gridX, y = gridY;
-        if (isOddRow) {
+        if (isEvenRow) {
             firstOrderNeighbours[0] = new Point(x - 1, y);
             firstOrderNeighbours[1] = new Point(x - 1, y - 1);
             firstOrderNeighbours[2] = new Point(x - 1, y + 1);
@@ -93,22 +93,24 @@ class Hexagon extends JPanel {
         }
     }
 
-    private void drawEvenRowHex() {
+    private void drawOddRowHex() {
         int off = 10;   //offset
 
-        int wx = w * this.gridX + w / 2, hy = (int) (gridY * (h * 3.0 / 4.0));
-        this.center = new Point(off + w * gridX + w, off + hy + h / 2);
+        int wx = (int) (w * this.gridX + w / 2.0), hy = (int) (gridY * (h * 3.0 / 4.0));
+        this.center = new Point(off + w * gridX + w, (int) (off + hy + h / 2.0));
 
-        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w, x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
-        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0), y4 = (int) (off + hy + 3 * h / 4.0), y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
+        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w,
+                x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
+        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0),
+                y4 = (int) (off + hy + 3 * h / 4.0), y5 = off + hy + h, y6 = (int) (off + hy + 3.0 * h / 4.0);
 
         if (thickness == 1) {
-            bresenham(x1, y1, x2, y2);
-            bresenham(x2, y2, x3, y3);
+            bresenham(x2 + 1, y2, x1, y1);
+            bresenham(x2 + 1, y2, x3, y3);
             bresenham(x3, y3, x4, y4);
-            bresenham(x4, y4, x5, y5);
-            bresenham(x5, y5, x6, y6);
-            bresenham(x6, y6, x1, y1);
+            bresenham(x4, y4, x5 + 1, y5);
+            bresenham(x6, y6, x5 + 1, y5);
+            bresenham(x6, y6 + 1, x1, y1);
         } else {
             Graphics2D g = (Graphics2D) this.imageGrid.getGraphics();
             g.setPaint(Color.BLACK);
@@ -124,14 +126,16 @@ class Hexagon extends JPanel {
 
     }
 
-    private void drawOddRowHex() {
+    private void drawEvenRowHex() {
         int off = 10;   //offset
 
-        int wx = w * this.gridX, hy = (int) (h * this.gridY * 1.5) / 2;
-        this.center = new Point(off + wx + w / 2, off + hy + h / 2);
+        int wx = w * this.gridX, hy = (int) ((h * this.gridY * 1.5) / 2.0);
+        this.center = new Point((int) (off + wx + w / 2.0), (int) (off + hy + h / 2.0));
 
-        int x1 = off + wx, x2 = off + wx + w / 2, x3 = off + wx + w, x4 = off + wx + w, x5 = off + wx + w / 2, x6 = off + wx;
-        int y1 = off + hy + h / 4, y2 = off + hy, y3 = off + hy + h / 4, y4 = off + hy + 3 * h / 4, y5 = off + hy + h, y6 = off + hy + 3 * h / 4;
+        int x1 = off + wx, x2 = (int) (off + wx + w / 2.0), x3 = off + wx + w, x4 = off + wx + w,
+                x5 = (int) (off + wx + w / 2.0), x6 = off + wx;
+        int y1 = (int) (off + hy + h / 4.0), y2 = off + hy, y3 = (int) (off + hy + h / 4.0),
+                y4 = (int) (off + hy + 3.0 * h / 4.0), y5 = off + hy + h, y6 = (int) (off + hy + 3.0 * h / 4.0);
 
         if (thickness == 1) {
             bresenham(x1, y1, x2, y2);
@@ -168,7 +172,8 @@ class Hexagon extends JPanel {
                     err -= 2 * dy;
                     x += sx;
                 }
-                imageGrid.setRGB(x, y, Color.BLACK.getRGB());
+                if (imageGrid.getRGB(x, y) != Color.BLACK.getRGB())
+                    imageGrid.setRGB(x, y, Color.BLACK.getRGB());
             }
         } else {
             int err = -dx;
@@ -180,13 +185,14 @@ class Hexagon extends JPanel {
                     err -= 2 * dx;
                     y += sy;
                 }
-                imageGrid.setRGB(x, y, Color.BLACK.getRGB());
+                if (imageGrid.getRGB(x, y) != Color.BLACK.getRGB())
+                    imageGrid.setRGB(x, y, Color.BLACK.getRGB());
             }
         }
     }
 
     void spanSelf(int color) {
-        spanFill(imageGrid, this.center.x - w / 4, this.center.y, color, currentColorRGB);
+        spanFill(imageGrid, (int) (this.center.x - w / 4.0), this.center.y, color, currentColorRGB);
         if (color == ALIVE_COLOR) this.isDead = false;
         if (color == DEAD_COLOR) this.isDead = true;
         this.currentColorRGB = color;

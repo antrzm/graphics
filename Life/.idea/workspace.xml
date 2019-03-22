@@ -26,24 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="307" column="33" lean-forward="true" selection-start-line="307" selection-start-column="33" selection-end-line="307" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Hexagon.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="194" column="4" selection-start-line="194" selection-start-column="4" selection-end-line="194" selection-end-column="4" />
-              <folding>
-                <element signature="method#initNeighbours#0;class#Hexagon#0" />
-                <element signature="method#isInside#0;class#Hexagon#0" />
-              </folding>
+            <state relative-caret-position="216">
+              <caret line="328" selection-start-line="328" selection-end-line="328" />
             </state>
           </provider>
         </entry>
@@ -51,11 +38,29 @@
       <file leaf-file-name="HexagonGrid.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="610" lean-forward="true" selection-start-line="610" selection-end-line="610" />
+            <state relative-caret-position="9503">
+              <caret line="610" selection-start-line="610" selection-end-line="610" />
               <folding>
                 <element signature="e#21829#21830#0" expanded="true" />
                 <element signature="e#21871#21872#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Hexagon.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="67">
+              <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
+              <folding>
+                <element signature="method#initNeighbours#0;class#Hexagon#0" />
+                <element signature="method#drawEvenRowHex#0;class#Hexagon#0" />
+                <element signature="method#bresenham#0;class#Hexagon#0" />
+                <element signature="method#spanFill#0;class#Hexagon#0" />
+                <element signature="method#showImpact#0;class#Hexagon#0" />
+                <element signature="method#hideImpact#0;class#Hexagon#0" />
+                <element signature="method#setImpact#0;class#Hexagon#0" />
               </folding>
             </state>
           </provider>
@@ -92,6 +97,7 @@
       <find>resi</find>
       <find>syste</find>
       <find>sys</find>
+      <find>/</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -108,8 +114,8 @@
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainForm.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java" />
       </list>
     </option>
   </component>
@@ -133,8 +139,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -171,12 +175,14 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Filter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../nsu_6_graphics-master/nsu_6_graphics-master/FIT_16201_Boldyrev_Lab1" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -250,11 +256,12 @@
       <workItem from="1552874594469" duration="2791000" />
       <workItem from="1553071159606" duration="9587000" />
       <workItem from="1553224153516" duration="1681000" />
+      <workItem from="1553233448085" duration="3875000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="202075000" />
+    <option name="totallyTimeSpent" value="205950000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1552" height="832" extended-state="0" />
@@ -274,7 +281,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17158177" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1735925" />
       <window_info anchor="right" id="Database" order="3" weight="0.3297587" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -291,17 +298,17 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3275862" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24949698" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33189654" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16018766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -311,10 +318,10 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3922414" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info id="Capture Tool" order="5" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3275862" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32614943" />
       <window_info anchor="right" id="Maven Projects" order="8" />
       <window_info id="Favorites" order="6" side_tool="true" />
@@ -615,13 +622,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1013" selection-start-line="1013" selection-end-line="1013" />
-          <folding>
-            <element signature="e#14537#14538#0" expanded="true" />
-            <element signature="e#14561#14562#0" expanded="true" />
-            <element signature="e#31436#31437#0" expanded="true" />
-            <element signature="e#31480#31481#0" expanded="true" />
-            <element signature="e#35491#35492#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -704,10 +704,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="328" selection-start-line="328" selection-end-line="328" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/HexagonGrid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="610" lean-forward="true" selection-start-line="610" selection-end-line="610" />
+        <state relative-caret-position="9503">
+          <caret line="610" selection-start-line="610" selection-end-line="610" />
           <folding>
             <element signature="e#21829#21830#0" expanded="true" />
             <element signature="e#21871#21872#0" expanded="true" />
@@ -717,19 +724,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/graphics/Hexagon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="194" column="4" selection-start-line="194" selection-start-column="4" selection-end-line="194" selection-end-column="4" />
+        <state relative-caret-position="67">
+          <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
           <folding>
             <element signature="method#initNeighbours#0;class#Hexagon#0" />
-            <element signature="method#isInside#0;class#Hexagon#0" />
+            <element signature="method#drawEvenRowHex#0;class#Hexagon#0" />
+            <element signature="method#bresenham#0;class#Hexagon#0" />
+            <element signature="method#spanFill#0;class#Hexagon#0" />
+            <element signature="method#showImpact#0;class#Hexagon#0" />
+            <element signature="method#hideImpact#0;class#Hexagon#0" />
+            <element signature="method#setImpact#0;class#Hexagon#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="307" column="33" lean-forward="true" selection-start-line="307" selection-start-column="33" selection-end-line="307" selection-end-column="33" />
         </state>
       </provider>
     </entry>
