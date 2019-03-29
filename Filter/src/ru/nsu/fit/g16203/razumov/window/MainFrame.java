@@ -9,7 +9,7 @@ import java.security.InvalidParameterException;
 public class MainFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     private JMenuBar menuBar;
-    public JToolBar toolBar;
+    JToolBar toolBar;
 
     private MainFrame() {
         try {
@@ -24,14 +24,14 @@ public class MainFrame extends JFrame {
         add(toolBar, BorderLayout.PAGE_START);
     }
 
-    public MainFrame(int x, int y, String title) {
+    MainFrame(int x, int y, String title) {
         this();
         setSize(x, y);
         setLocationByPlatform(true);
         setTitle(title);
     }
 
-    JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException {
+    private JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException {
         JMenuItem item = new JMenuItem(title);
         //if (mnemonic != -1)
         item.setMnemonic(mnemonic);
@@ -54,13 +54,13 @@ public class MainFrame extends JFrame {
         return createMenuItem(title, tooltip, mnemonic, null, actionMethod);
     }
 
-    public JMenu createSubMenu(String title, int mnemonic) {
+    private JMenu createSubMenu(String title, int mnemonic) {
         JMenu menu = new JMenu(title);
         menu.setMnemonic(mnemonic);
         return menu;
     }
 
-    public void addSubMenu(String title, int mnemonic) {
+    void addSubMenu(String title, int mnemonic) {
         MenuElement element = getParentMenuElement(title);
         if (element == null)
             throw new InvalidParameterException("Menu path not found: " + title);
@@ -75,7 +75,7 @@ public class MainFrame extends JFrame {
             throw new InvalidParameterException("Invalid menu path: " + title);
     }
 
-    public void addMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException {
+    void addMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException {
         MenuElement element = getParentMenuElement(title);
         if (element == null)
             throw new InvalidParameterException("Menu path not found: " + title);

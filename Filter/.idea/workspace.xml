@@ -12,50 +12,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="973">
-              <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+            <state relative-caret-position="187">
+              <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2258#2259#0" expanded="true" />
-                <element signature="e#2278#2279#0" expanded="true" />
-                <element signature="method#onSelect#0;class#MainWindow#0" />
+                <element signature="e#938#956#0" />
+                <element signature="e#2881#2906#0" />
+                <element signature="e#5871#5872#0" expanded="true" />
+                <element signature="e#5944#5945#0" expanded="true" />
+                <element signature="e#8358#8359#0" expanded="true" />
+                <element signature="e#8412#8413#0" expanded="true" />
+                <element signature="e#8443#8444#0" expanded="true" />
+                <element signature="e#8498#8499#0" expanded="true" />
+                <element signature="e#10028#10029#0" expanded="true" />
+                <element signature="e#10063#10064#0" expanded="true" />
+                <element signature="e#10089#10090#0" expanded="true" />
+                <element signature="e#10124#10125#0" expanded="true" />
+                <element signature="e#10152#10153#0" expanded="true" />
+                <element signature="e#10202#10203#0" expanded="true" />
                 <element signature="method#onToolBar#0;class#MainWindow#0" />
                 <element signature="method#onStatusBar#0;class#MainWindow#0" />
                 <element signature="method#onAbout#0;class#MainWindow#0" />
-                <element signature="method#saveFile#0;class#MainWindow#0" />
-                <element signature="method#loadFile#0;class#MainWindow#0" />
-                <element signature="method#getDataDirectory#0;class#MainWindow#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StampingFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/StampingFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SharpingFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpingFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="52" column="22" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Filter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Filter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -63,36 +44,52 @@
       <file leaf-file-name="ZonesPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+            <state relative-caret-position="226">
+              <caret line="176" column="127" lean-forward="true" selection-start-line="176" selection-start-column="14" selection-end-line="176" selection-end-column="127" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2073#2074#0" expanded="true" />
-                <element signature="e#2093#2094#0" expanded="true" />
-                <element signature="e#2147#2148#0" expanded="true" />
-                <element signature="e#2195#2196#0" expanded="true" />
-                <element signature="e#2175#2176#0" expanded="true" />
-                <element signature="e#2203#2204#0" expanded="true" />
-                <element signature="e#2239#2240#0" expanded="true" />
-                <element signature="e#2267#2268#0" expanded="true" />
-                <element signature="e#2303#2304#0" expanded="true" />
-                <element signature="e#2331#2332#0" expanded="true" />
+                <element signature="e#2601#2602#0" expanded="true" />
+                <element signature="e#2649#2650#0" expanded="true" />
+                <element signature="e#2677#2678#0" expanded="true" />
+                <element signature="e#2725#2726#0" expanded="true" />
+                <element signature="e#2465#2466#0" expanded="true" />
+                <element signature="e#2493#2494#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImagePanel.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ImagePanel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="30" column="45" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
+            <state relative-caret-position="289">
+              <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#paintComponent#0;class#ImagePanel#0" />
-                <element signature="e#2770#2771#0" expanded="true" />
-                <element signature="e#2798#2799#0" expanded="true" />
+                <element signature="e#705#899#0" expanded="true" />
+                <element signature="e#898#899#0" expanded="true" />
+                <element signature="e#934#1134#0" expanded="true" />
+                <element signature="e#1133#1134#0" expanded="true" />
+                <element signature="e#1163#1369#0" expanded="true" />
+                <element signature="e#1368#1369#0" expanded="true" />
+                <element signature="e#2516#2517#0" expanded="true" />
+                <element signature="e#2559#2560#0" expanded="true" />
+                <element signature="e#2694#2695#0" expanded="true" />
+                <element signature="e#2730#2731#0" expanded="true" />
+                <element signature="e#4242#4243#0" expanded="true" />
+                <element signature="e#4288#4289#0" expanded="true" />
+                <element signature="e#4313#4314#0" expanded="true" />
+                <element signature="e#4347#4348#0" expanded="true" />
+                <element signature="e#4383#4384#0" expanded="true" />
+                <element signature="e#4418#4419#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ByteInterleavedRaster.class" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/jre/lib/rt.jar!/sun/awt/image/ByteInterleavedRaster.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="966" selection-start-line="966" selection-end-line="966" />
             </state>
           </provider>
         </entry>
@@ -111,7 +108,14 @@
     <findStrings>
       <find>ImageIcon</find>
       <find>extensions</find>
+      <find>resi</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+    <dirStrings>
+      <dir>C:\Users\Anton\Downloads\THE REAL SCIENCE\Graphics\g16203_Razumov\Filter\src\ru\nsu\fit\g16203\razumov\filters</dir>
+    </dirStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -120,16 +124,27 @@
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/BasePanel.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/zonesPanel.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/Main.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/InvertionFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpingFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/StampingFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Filter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Zoom.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpenFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Gamma.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/WaterColorFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/GaussFilter.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/InversionFilter.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/BlackWhiteFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Rotate.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/OrderedDithering.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MatrixSize.form" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Roberts.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Sobel.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/FloydDithering.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Filter.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpingFilter.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/StampingFilter.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java" />
       </list>
     </option>
   </component>
@@ -142,18 +157,16 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-10" />
-    <option name="width" value="1940" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="950" />
+    <option name="width" value="980" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -184,29 +197,38 @@
               <item name="Filter" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="razumov" type="462c0819:PsiDirectoryNode" />
+              <item name="panels" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Filter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Filter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="razumov" type="462c0819:PsiDirectoryNode" />
               <item name="window" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../nsu_6_graphics-master/nsu_6_graphics-master/FIT_16201_Boldyrev_Lab2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Filter/Filter" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Anton\Downloads\THE REAL SCIENCE\Graphics\g16203_Razumov\Filter\src\ru\nsu\fit\g16203\razumov\window" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Anton\Downloads\THE REAL SCIENCE\Graphics\g16203_Razumov\Filter" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="ru.nsu.fit.g16203.razumov.window" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Anton\Downloads\THE REAL SCIENCE\Graphics\g16203_Razumov\Filter" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Anton\Downloads\THE REAL SCIENCE\Graphics\g16203_Razumov\Filter\src\ru\nsu\fit\g16203\razumov\window" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -264,45 +286,77 @@
       <workItem from="1553077025968" duration="7580000" />
       <workItem from="1553085560171" duration="10121000" />
       <workItem from="1553159805051" duration="16517000" />
+      <workItem from="1553676852129" duration="22694000" />
+      <workItem from="1553770593435" duration="28955000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34234000" />
+    <option name="totallyTimeSpent" value="85884000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1552" height="832" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.3275862" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32621083" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27492878" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.39367816" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16487935" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16912752" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32902297" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3994253" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32902297" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20940171" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32621083" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1671141" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32902297" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988604" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -312,33 +366,28 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="22" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java</url>
+          <line>138</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="41" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="35" lean-forward="true" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2346">
           <caret line="138" column="28" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2258#2259#0" expanded="true" />
-            <element signature="e#2278#2279#0" expanded="true" />
-            <element signature="method#onSelect#0;class#MainWindow#0" />
-            <element signature="method#onToolBar#0;class#MainWindow#0" />
-            <element signature="method#onStatusBar#0;class#MainWindow#0" />
-            <element signature="method#onAbout#0;class#MainWindow#0" />
-            <element signature="method#saveFile#0;class#MainWindow#0" />
-            <element signature="method#loadFile#0;class#MainWindow#0" />
-            <element signature="method#getDataDirectory#0;class#MainWindow#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -346,19 +395,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2073#2074#0" expanded="true" />
-            <element signature="e#2093#2094#0" expanded="true" />
-            <element signature="e#2147#2148#0" expanded="true" />
-            <element signature="e#2195#2196#0" expanded="true" />
-            <element signature="e#2175#2176#0" expanded="true" />
-            <element signature="e#2203#2204#0" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2267#2268#0" expanded="true" />
-            <element signature="e#2303#2304#0" expanded="true" />
-            <element signature="e#2331#2332#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -366,12 +402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#paintComponent#0;class#ImagePanel#0" />
-            <element signature="e#2770#2771#0" expanded="true" />
-            <element signature="e#2798#2799#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -386,18 +416,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="42" column="51" selection-start-line="42" selection-start-column="51" selection-end-line="42" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2258#2259#0" expanded="true" />
-            <element signature="e#2278#2279#0" expanded="true" />
-            <element signature="method#onSelect#0;class#MainWindow#0" />
-            <element signature="method#onToolBar#0;class#MainWindow#0" />
-            <element signature="method#onStatusBar#0;class#MainWindow#0" />
-            <element signature="method#onAbout#0;class#MainWindow#0" />
-            <element signature="method#saveFile#0;class#MainWindow#0" />
-            <element signature="method#loadFile#0;class#MainWindow#0" />
-            <element signature="method#getDataDirectory#0;class#MainWindow#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -405,12 +423,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#paintComponent#0;class#ImagePanel#0" />
-            <element signature="e#2770#2771#0" expanded="true" />
-            <element signature="e#2798#2799#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -453,10 +465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="157" column="11" selection-start-line="157" selection-start-column="11" selection-end-line="157" selection-end-column="11" />
-          <folding>
-            <element signature="e#6701#6702#0" expanded="true" />
-            <element signature="e#6758#6759#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -491,47 +499,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/Graphics.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123">
           <caret line="881" column="28" selection-start-line="881" selection-start-column="28" selection-end-line="881" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="52" column="29" lean-forward="true" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/InversionFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="30" column="45" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#paintComponent#0;class#ImagePanel#0" />
-            <element signature="e#2770#2771#0" expanded="true" />
-            <element signature="e#2798#2799#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -549,69 +520,350 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Filter.java">
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/Container.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+        <state relative-caret-position="169">
+          <caret line="415" column="21" selection-start-line="415" selection-start-column="21" selection-end-line="415" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/BlackWhiteFilter.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+        <state relative-caret-position="14">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2073#2074#0" expanded="true" />
-            <element signature="e#2093#2094#0" expanded="true" />
-            <element signature="e#2147#2148#0" expanded="true" />
-            <element signature="e#2195#2196#0" expanded="true" />
-            <element signature="e#2175#2176#0" expanded="true" />
-            <element signature="e#2203#2204#0" expanded="true" />
-            <element signature="e#2239#2240#0" expanded="true" />
-            <element signature="e#2267#2268#0" expanded="true" />
-            <element signature="e#2303#2304#0" expanded="true" />
-            <element signature="e#2331#2332#0" expanded="true" />
+            <element signature="e#6665#6666#0" expanded="true" />
+            <element signature="e#6729#6730#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpingFilter.java">
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/javax/swing/JOptionPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="52" column="22" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
+        <state relative-caret-position="832">
+          <caret line="1836" column="14" selection-start-line="1836" selection-start-column="14" selection-end-line="1836" selection-end-column="14" />
+          <folding>
+            <element signature="e#83720#83721#0" expanded="true" />
+            <element signature="e#83778#83779#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/javax/swing/JSlider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="500" column="15" selection-start-line="500" selection-start-column="15" selection-end-line="500" selection-end-column="15" />
+          <folding>
+            <element signature="e#15104#15105#0" expanded="true" />
+            <element signature="e#15148#15149#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/javax/swing/event/ChangeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="41" column="9" selection-start-line="41" selection-start-column="9" selection-end-line="41" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="137" column="25" selection-start-line="137" selection-start-column="25" selection-end-line="137" selection-end-column="25" />
+          <folding>
+            <element signature="e#5367#5368#0" expanded="true" />
+            <element signature="e#5448#5449#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Zoom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Gamma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
+          <folding>
+            <element signature="e#174#175#0" expanded="true" />
+            <element signature="e#205#206#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/util/Arrays.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="1245" column="33" lean-forward="true" selection-start-line="1245" selection-start-column="33" selection-end-line="1245" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/util/ComparableTimSort.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-488">
+          <caret line="243" column="24" selection-start-line="243" selection-start-column="24" selection-end-line="243" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/StampingFilter.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="49" column="9" lean-forward="true" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/InversionFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/Color.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="576" column="27" lean-forward="true" selection-start-line="576" selection-start-column="27" selection-end-line="576" selection-end-column="27" />
+          <folding>
+            <element signature="e#17219#17220#0" expanded="true" />
+            <element signature="e#17265#17266#0" expanded="true" />
+            <element signature="e#17685#17686#0" expanded="true" />
+            <element signature="e#17730#17731#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Filter.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/GaussFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/BlackWhiteFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="59" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/SharpenFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="45" column="64" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/javax/swing/JButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="89" column="11" selection-start-line="89" selection-start-column="11" selection-end-line="89" selection-end-column="11" />
+          <folding>
+            <element signature="e#2398#2399#0" expanded="true" />
+            <element signature="e#2430#2431#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MatrixSize.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MatrixSize.form">
+      <provider selected="true" editor-type-id="ui-designer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Rotate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="95" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#229#230#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/Dimension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-165">
+          <caret line="97" column="11" selection-start-line="97" selection-start-column="11" selection-end-line="97" selection-end-column="11" />
+          <folding>
+            <element signature="e#2206#2207#0" expanded="true" />
+            <element signature="e#2232#2233#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/javax/swing/JComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-80">
+          <caret line="4351" column="21" selection-start-line="4351" selection-start-column="21" selection-end-line="4351" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/OrderedDithering.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/WaterColorFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Sobel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#287#288#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/Roberts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#241#242#0" expanded="true" />
+            <element signature="e#283#284#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/filters/FloydDithering.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="20" column="17" lean-forward="true" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="973">
-          <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+        <state relative-caret-position="187">
+          <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2258#2259#0" expanded="true" />
-            <element signature="e#2278#2279#0" expanded="true" />
-            <element signature="method#onSelect#0;class#MainWindow#0" />
+            <element signature="e#938#956#0" />
+            <element signature="e#2881#2906#0" />
+            <element signature="e#5871#5872#0" expanded="true" />
+            <element signature="e#5944#5945#0" expanded="true" />
+            <element signature="e#8358#8359#0" expanded="true" />
+            <element signature="e#8412#8413#0" expanded="true" />
+            <element signature="e#8443#8444#0" expanded="true" />
+            <element signature="e#8498#8499#0" expanded="true" />
+            <element signature="e#10028#10029#0" expanded="true" />
+            <element signature="e#10063#10064#0" expanded="true" />
+            <element signature="e#10089#10090#0" expanded="true" />
+            <element signature="e#10124#10125#0" expanded="true" />
+            <element signature="e#10152#10153#0" expanded="true" />
+            <element signature="e#10202#10203#0" expanded="true" />
             <element signature="method#onToolBar#0;class#MainWindow#0" />
             <element signature="method#onStatusBar#0;class#MainWindow#0" />
             <element signature="method#onAbout#0;class#MainWindow#0" />
-            <element signature="method#saveFile#0;class#MainWindow#0" />
-            <element signature="method#loadFile#0;class#MainWindow#0" />
-            <element signature="method#getDataDirectory#0;class#MainWindow#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/image/BufferedImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="1201" column="49" selection-start-line="1201" selection-start-column="49" selection-end-line="1201" selection-end-column="49" />
+          <folding>
+            <element signature="e#37710#37711#0" expanded="true" />
+            <element signature="e#37786#37787#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/jre/lib/rt.jar!/sun/java2d/SunGraphics2D.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="1614" selection-start-line="1614" selection-end-line="1614" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/jre/lib/rt.jar!/sun/awt/image/ByteInterleavedRaster.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="966" selection-start-line="966" selection-end-line="966" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="176" column="127" lean-forward="true" selection-start-line="176" selection-start-column="14" selection-end-line="176" selection-end-column="127" />
+          <folding>
+            <element signature="e#2601#2602#0" expanded="true" />
+            <element signature="e#2649#2650#0" expanded="true" />
+            <element signature="e#2677#2678#0" expanded="true" />
+            <element signature="e#2725#2726#0" expanded="true" />
+            <element signature="e#2465#2466#0" expanded="true" />
+            <element signature="e#2493#2494#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+          <folding>
+            <element signature="e#705#899#0" expanded="true" />
+            <element signature="e#898#899#0" expanded="true" />
+            <element signature="e#934#1134#0" expanded="true" />
+            <element signature="e#1133#1134#0" expanded="true" />
+            <element signature="e#1163#1369#0" expanded="true" />
+            <element signature="e#1368#1369#0" expanded="true" />
+            <element signature="e#2516#2517#0" expanded="true" />
+            <element signature="e#2559#2560#0" expanded="true" />
+            <element signature="e#2694#2695#0" expanded="true" />
+            <element signature="e#2730#2731#0" expanded="true" />
+            <element signature="e#4242#4243#0" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4313#4314#0" expanded="true" />
+            <element signature="e#4347#4348#0" expanded="true" />
+            <element signature="e#4383#4384#0" expanded="true" />
+            <element signature="e#4418#4419#0" expanded="true" />
           </folding>
         </state>
       </provider>
