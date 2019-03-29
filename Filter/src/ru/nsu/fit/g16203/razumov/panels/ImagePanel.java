@@ -14,6 +14,7 @@ public class ImagePanel extends JPanel {
     private static final int SIZE = 350;
     private BufferedImage image;
     private int selectWidth, selectHeight;
+    private int scaledWidth, scaledHeight;
 
     private boolean isSelectShown;
     private Point select1, select2;
@@ -42,7 +43,7 @@ public class ImagePanel extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 if (isSelectShown)
                     getSelectCoords(e);
-                    repaint();
+                repaint();
             }
         });
 
@@ -79,6 +80,8 @@ public class ImagePanel extends JPanel {
             if (width <= SIZE && height <= SIZE) {      //2a
                 selectWidth = width;
                 selectHeight = height;
+                scaledHeight = height;
+                scaledWidth = width;
                 g.drawImage(image, 0, 0, this);
             } else {                                      //2b
                 if (height < width) {
@@ -92,8 +95,12 @@ public class ImagePanel extends JPanel {
                 double widthToHeight = (double) (width) / height;
 
                 if (widthToHeight >= 1) {
+                    scaledHeight = (int) (SIZE / widthToHeight);
+                    scaledWidth = SIZE;
                     g.drawImage(image, 0, 0, SIZE, (int) (SIZE / widthToHeight), this);
                 } else {
+                    scaledHeight = SIZE;
+                    scaledWidth = (int) (SIZE * widthToHeight);
                     g.drawImage(image, 0, 0, (int) (SIZE * widthToHeight), SIZE, this);
                 }
                 if (isSelectShown) {
@@ -116,13 +123,39 @@ public class ImagePanel extends JPanel {
         int y = e.getY();
 
         if (image != null) {
-            select1.x = (x - selectWidth / 2) < 0 ? 0 : (x - selectWidth / 2);
+            select1.x = (x - selectWidth / 2) > 0 ? (x - selectWidth / 2) : 0;
+            select2.x = (int) (x + Math.ceil((double) selectWidth / 2)) < scaledWidth ? (int) (x + Math.ceil((double) selectWidth / 2)) : scaledWidth;
             select1.y = (y - selectHeight / 2) < 0 ? 0 : (y - selectHeight / 2);
+            select2.y = (int) (y + Math.ceil((double) selectHeight / 2)) < scaledHeight ? (int) (y + Math.ceil((double) selectHeight / 2)) : scaledHeight;
 
-            select2.x = (x + selectWidth / 2) < image.getWidth() ? (x + selectWidth / 2) : image.getWidth();
-            select2.y = (y + selectHeight / 2) < image.getHeight() ? (y + selectHeight / 2) : image.getHeight();
+            if (select2.x - select1.x < selectWidth) {
+                if (select2.x >= scaledWidth) {
+                    select1.x = scaledWidth - selectWidth;
+                }
+                if (select1.x <= 0) {
+                    select2.x = selectWidth;
+                }
+            }
+            if (select2.y - select1.y < selectHeight) {
+                if (select1.y <= 0) {
+                    select2.y = selectHeight;
+                }
+                if (select2.y >= scaledHeight) {
+                    select1.y = scaledHeight - selectHeight;
+                }
+            }
 
-            parentPanel.getZoneB().setImage(image.getSubimage(select1.x, select1.y, SIZE, SIZE));
+            int x1 = select1.x * image.getWidth() / scaledWidth, x2 = select2.x * image.getWidth() / scaledWidth;
+            int y1 = select1.y * image.getHeight() / scaledHeight, y2 = select2.y * image.getHeight() / scaledHeight;
+            if (x2 - x1 < SIZE) {
+                if (x2 == image.getWidth()) x1 = x2 - SIZE;
+                if (x1 == 0) x2 = SIZE;
+            }
+            if (y2 - y1 < SIZE) {
+                if (y2 == image.getHeight()) y1 = y2 - SIZE;
+                if (y1 == 0) y2 = SIZE;
+            }
+            parentPanel.getZoneB().setImage(image.getSubimage(x1, y1, x2 - x1, y2 - y1));
         }
     }
 
@@ -144,7 +177,7 @@ public class ImagePanel extends JPanel {
         return isSelectShown;
     }
 
-    public void setParentPanel(ZonesPanel parentPanel) {
+    void setParentPanel(ZonesPanel parentPanel) {
         this.parentPanel = parentPanel;
     }
 

@@ -16,7 +16,7 @@
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
+              <caret line="178" selection-start-line="178" selection-end-line="178" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#938#956#0" />
@@ -44,8 +44,8 @@
       <file leaf-file-name="ZonesPanel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="176" column="127" lean-forward="true" selection-start-line="176" selection-start-column="14" selection-end-line="176" selection-end-column="127" />
+            <state relative-caret-position="631">
+              <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
               <folding>
                 <element signature="e#2601#2602#0" expanded="true" />
                 <element signature="e#2649#2650#0" expanded="true" />
@@ -61,8 +61,8 @@
       <file leaf-file-name="ImagePanel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+            <state relative-caret-position="292">
+              <caret line="155" column="34" lean-forward="true" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
               <folding>
                 <element signature="e#705#899#0" expanded="true" />
                 <element signature="e#898#899#0" expanded="true" />
@@ -70,26 +70,32 @@
                 <element signature="e#1133#1134#0" expanded="true" />
                 <element signature="e#1163#1369#0" expanded="true" />
                 <element signature="e#1368#1369#0" expanded="true" />
-                <element signature="e#2516#2517#0" expanded="true" />
-                <element signature="e#2559#2560#0" expanded="true" />
-                <element signature="e#2694#2695#0" expanded="true" />
-                <element signature="e#2730#2731#0" expanded="true" />
-                <element signature="e#4242#4243#0" expanded="true" />
-                <element signature="e#4288#4289#0" expanded="true" />
-                <element signature="e#4313#4314#0" expanded="true" />
-                <element signature="e#4347#4348#0" expanded="true" />
-                <element signature="e#4383#4384#0" expanded="true" />
-                <element signature="e#4418#4419#0" expanded="true" />
+                <element signature="e#4480#4481#0" expanded="true" />
+                <element signature="e#4508#4509#0" expanded="true" />
+                <element signature="e#4701#4702#0" expanded="true" />
+                <element signature="e#4744#4745#0" expanded="true" />
+                <element signature="e#4782#4783#0" expanded="true" />
+                <element signature="e#4818#4819#0" expanded="true" />
+                <element signature="e#4876#4877#0" expanded="true" />
+                <element signature="e#4922#4923#0" expanded="true" />
+                <element signature="e#4957#4958#0" expanded="true" />
+                <element signature="e#4991#4992#0" expanded="true" />
+                <element signature="e#5027#5028#0" expanded="true" />
+                <element signature="e#5062#5063#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ByteInterleavedRaster.class" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/jre/lib/rt.jar!/sun/awt/image/ByteInterleavedRaster.class">
+      <file leaf-file-name="BufferedImage.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/image/BufferedImage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="966" selection-start-line="966" selection-end-line="966" />
+            <state relative-caret-position="225">
+              <caret line="1199" column="57" selection-start-line="1199" selection-start-column="57" selection-end-line="1199" selection-end-column="57" />
+              <folding>
+                <element signature="e#37710#37711#0" expanded="true" />
+                <element signature="e#37786#37787#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -287,12 +293,12 @@
       <workItem from="1553085560171" duration="10121000" />
       <workItem from="1553159805051" duration="16517000" />
       <workItem from="1553676852129" duration="22694000" />
-      <workItem from="1553770593435" duration="28955000" />
+      <workItem from="1553770593435" duration="33197000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85884000" />
+    <option name="totallyTimeSpent" value="90126000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -366,21 +372,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java</url>
-          <line>103</line>
-          <properties />
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java</url>
-          <line>138</line>
-          <properties />
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="41" />
+      <option name="time" value="58" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -779,7 +771,7 @@
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/window/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
+          <caret line="178" selection-start-line="178" selection-end-line="178" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#938#956#0" />
@@ -803,17 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/image/BufferedImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="1201" column="49" selection-start-line="1201" selection-start-column="49" selection-end-line="1201" selection-end-column="49" />
-          <folding>
-            <element signature="e#37710#37711#0" expanded="true" />
-            <element signature="e#37786#37787#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/jre/lib/rt.jar!/sun/java2d/SunGraphics2D.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -830,8 +811,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ZonesPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="176" column="127" lean-forward="true" selection-start-line="176" selection-start-column="14" selection-end-line="176" selection-end-column="127" />
+        <state relative-caret-position="631">
+          <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
           <folding>
             <element signature="e#2601#2602#0" expanded="true" />
             <element signature="e#2649#2650#0" expanded="true" />
@@ -843,10 +824,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_131/src.zip!/java/awt/image/BufferedImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="1199" column="57" selection-start-line="1199" selection-start-column="57" selection-end-line="1199" selection-end-column="57" />
+          <folding>
+            <element signature="e#37710#37711#0" expanded="true" />
+            <element signature="e#37786#37787#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16203/razumov/panels/ImagePanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+        <state relative-caret-position="292">
+          <caret line="155" column="34" lean-forward="true" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
           <folding>
             <element signature="e#705#899#0" expanded="true" />
             <element signature="e#898#899#0" expanded="true" />
@@ -854,16 +846,18 @@
             <element signature="e#1133#1134#0" expanded="true" />
             <element signature="e#1163#1369#0" expanded="true" />
             <element signature="e#1368#1369#0" expanded="true" />
-            <element signature="e#2516#2517#0" expanded="true" />
-            <element signature="e#2559#2560#0" expanded="true" />
-            <element signature="e#2694#2695#0" expanded="true" />
-            <element signature="e#2730#2731#0" expanded="true" />
-            <element signature="e#4242#4243#0" expanded="true" />
-            <element signature="e#4288#4289#0" expanded="true" />
-            <element signature="e#4313#4314#0" expanded="true" />
-            <element signature="e#4347#4348#0" expanded="true" />
-            <element signature="e#4383#4384#0" expanded="true" />
-            <element signature="e#4418#4419#0" expanded="true" />
+            <element signature="e#4480#4481#0" expanded="true" />
+            <element signature="e#4508#4509#0" expanded="true" />
+            <element signature="e#4701#4702#0" expanded="true" />
+            <element signature="e#4744#4745#0" expanded="true" />
+            <element signature="e#4782#4783#0" expanded="true" />
+            <element signature="e#4818#4819#0" expanded="true" />
+            <element signature="e#4876#4877#0" expanded="true" />
+            <element signature="e#4922#4923#0" expanded="true" />
+            <element signature="e#4957#4958#0" expanded="true" />
+            <element signature="e#4991#4992#0" expanded="true" />
+            <element signature="e#5027#5028#0" expanded="true" />
+            <element signature="e#5062#5063#0" expanded="true" />
           </folding>
         </state>
       </provider>
