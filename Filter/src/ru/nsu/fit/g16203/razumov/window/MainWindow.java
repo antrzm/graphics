@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 
@@ -139,8 +140,60 @@ public class MainWindow extends MainFrame {
     }
 
     public void onFS() {
-        initRGBDialog();
-        imageZones.applyFilter(new FloydDithering(2, 2, 2));
+        JFrame frame = new JFrame("RGB");
+        frame.setPreferredSize(new Dimension(250,150));
+        frame.setResizable(false);
+        JPanel panel = new JPanel(new FlowLayout());
+
+        JPanel fields = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel buttons = new JPanel();
+
+        JLabel rLabel = new JLabel("R:");
+        JLabel gLabel = new JLabel("G:");
+        JLabel bLabel = new JLabel("B:");
+
+        JTextField rField = new JTextField();
+        JTextField gField = new JTextField();
+        JTextField bField = new JTextField();
+
+        rField.setText("2");
+        gField.setText("2");
+        bField.setText("2");
+
+        JButton okButton = new JButton("OK");
+
+        fields.add(rLabel);
+        fields.add(rField);
+        fields.add(gLabel);
+        fields.add(gField);
+        fields.add(bLabel);
+        fields.add(bField);
+
+        buttons.add(okButton);
+
+        panel.add(fields);
+        panel.add(buttons);
+
+        okButton.addActionListener(e -> {
+
+            int r,g,b;
+            try {
+                r = Integer.parseInt(rField.getText());
+                g = Integer.parseInt(gField.getText());
+                b = Integer.parseInt(bField.getText());
+            } catch (NumberFormatException ex){
+                r = g = b = 2;
+            }
+
+            imageZones.applyFilter(new FloydDithering(r,g,b));
+
+            frame.setVisible(false);
+            frame.dispose();
+        });
+
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
     }
 
     public void onOrdered() {
