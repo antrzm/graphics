@@ -6,11 +6,8 @@ import ru.nsu.fit.g16203.razumov.panels.ZonesPanel;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Objects;
 
@@ -22,6 +19,8 @@ public class MainWindow extends MainFrame {
     private JPanel statusBar;
     private JLabel status;
     private File dataDirectory;
+
+    private int angle = 0, r = 2, g = 2, b = 2, gamma = 0, sobel = 100, roberts = 50;
 
     public MainWindow() {
         super(1200, 500, "Filter");
@@ -156,9 +155,9 @@ public class MainWindow extends MainFrame {
         JTextField gField = new JTextField();
         JTextField bField = new JTextField();
 
-        rField.setText("2");
-        gField.setText("2");
-        bField.setText("2");
+        rField.setText(String.valueOf(r));
+        gField.setText(String.valueOf(g));
+        bField.setText(String.valueOf(b));
 
         JButton okButton = new JButton("OK");
 
@@ -175,7 +174,6 @@ public class MainWindow extends MainFrame {
         panel.add(button);
 
         okButton.addActionListener(e -> {
-            int r, g, b;
             try {
                 r = Integer.parseInt(rField.getText());
                 g = Integer.parseInt(gField.getText());
@@ -192,44 +190,12 @@ public class MainWindow extends MainFrame {
 
         frame.add(panel);
         frame.pack();
+        frame.setLocationRelativeTo(this);
         frame.setVisible(true);
     }
 
     public void onOrdered() {
         imageZones.applyFilter(new OrderedDithering(16, 2, 2, 2));
-    }
-
-    private JDialog initRGBDialog() {
-        JDialog rgbDialog = new JDialog(this, "Enter RGB", true);
-        JPanel panel = new JPanel(new GridLayout(2, 1));
-        JPanel valuesPanel = new JPanel(new GridLayout(3, 2));
-
-        JLabel rLabel = new JLabel("R:");
-        JTextField rField = new JTextField(0);
-        rField.setText("2");
-        valuesPanel.add(rLabel);
-        valuesPanel.add(rField);
-
-        JLabel gLabel = new JLabel("G:");
-        JTextField gField = new JTextField(0);
-        gField.setText("2");
-        valuesPanel.add(gLabel);
-        valuesPanel.add(gField);
-
-        JLabel bLabel = new JLabel("B:");
-        JTextField bField = new JTextField(0);
-        bField.setText("2");
-        valuesPanel.add(bLabel);
-        valuesPanel.add(bField);
-
-        panel.add(valuesPanel);
-        JButton okButton = new JButton("OK");
-        panel.add(okButton, SwingConstants.CENTER);
-        rgbDialog.add(panel);
-
-        //TODO: listeners
-
-        return rgbDialog;
     }
 
     public void onSharpen() {
@@ -248,9 +214,9 @@ public class MainWindow extends MainFrame {
         JDialog frame = new JDialog(this, "Choose gamma", true);
         JPanel panel = new JPanel(new GridLayout(3, 1));
         JPanel valuePanel = new JPanel(new GridLayout(2, 2));
-        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, 0);
+        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, gamma);
         JTextField valueField = new JTextField(0);
-        valueField.setText("0");
+        valueField.setText(String.valueOf(gamma));
         valuePanel.add(valueSlider);
         valuePanel.add(valueField);
 
@@ -264,7 +230,7 @@ public class MainWindow extends MainFrame {
                 if (!valueField.getText().isEmpty())
                     try {
                         valueSlider.setValue(Integer.parseInt(valueField.getText()));
-                    }catch (NumberFormatException ex){
+                    } catch (NumberFormatException ex) {
                         valueSlider.setValue(0);
                     }
             }
@@ -272,14 +238,13 @@ public class MainWindow extends MainFrame {
 
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
-            int val;
             try {
-                val = Integer.parseInt(valueField.getText());
+                gamma = Integer.parseInt(valueField.getText());
             } catch (NumberFormatException ex) {
-                val = 0;
+                gamma = 0;
             }
 
-            imageZones.applyFilter(new Gamma(val));
+            imageZones.applyFilter(new Gamma(gamma));
 
             frame.setVisible(false);
             frame.dispose();
@@ -314,9 +279,15 @@ public class MainWindow extends MainFrame {
         JDialog thresholdDialog = new JDialog(this, title, true);
         JPanel panel = new JPanel(new GridLayout(2, 1));
         JPanel valuePanel = new JPanel(new GridLayout(2, 2));
-        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 1, 500, 100);
         JTextField valueField = new JTextField(0);
-        valueField.setText("100");
+        JSlider valueSlider;
+        if (isSobel) {
+            valueField.setText(String.valueOf(sobel));
+            valueSlider = new JSlider(JSlider.HORIZONTAL, 1, 500, sobel);
+        } else {
+            valueField.setText(String.valueOf(roberts));
+            valueSlider = new JSlider(JSlider.HORIZONTAL, 1, 500, roberts);
+        }
         valuePanel.add(valueSlider);
         valuePanel.add(valueField);
 
@@ -325,8 +296,13 @@ public class MainWindow extends MainFrame {
             int val;
             try {
                 val = Integer.parseInt(valueField.getText());
-                if (isSobel) imageZones.applyFilter(new Sobel(val));
-                else imageZones.applyFilter(new Roberts(val));
+                if (isSobel) {
+                    sobel = val;
+                    imageZones.applyFilter(new Sobel(val));
+                } else {
+                    roberts = val;
+                    imageZones.applyFilter(new Roberts(val));
+                }
             } catch (NumberFormatException ignored) {
             }
 
@@ -377,9 +353,9 @@ public class MainWindow extends MainFrame {
         JDialog frame = new JDialog(this, "Choose angle", true);
         JPanel panel = new JPanel(new GridLayout(3, 1));
         JPanel valuePanel = new JPanel(new GridLayout(2, 2));
-        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, -180, 180, 0);
+        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, -180, 180, angle);
         JTextField valueField = new JTextField(0);
-        valueField.setText("0");
+        valueField.setText(String.valueOf(angle));
         valuePanel.add(valueSlider);
         valuePanel.add(valueField);
 
@@ -394,7 +370,7 @@ public class MainWindow extends MainFrame {
                 if (!valueField.getText().isEmpty())
                     try {
                         valueSlider.setValue(Integer.parseInt(valueField.getText()));
-                    }catch (NumberFormatException ex){
+                    } catch (NumberFormatException ex) {
                         valueSlider.setValue(0);
                     }
             }
@@ -402,14 +378,13 @@ public class MainWindow extends MainFrame {
 
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
-            int val;
             try {
-                val = Integer.parseInt(valueField.getText());
+                angle = Integer.parseInt(valueField.getText());
             } catch (NumberFormatException ex) {
-                val = 0;
+                angle = 0;
             }
 
-            imageZones.applyFilter(new Rotate(val));
+            imageZones.applyFilter(new Rotate(angle));
 
             frame.setVisible(false);
             frame.dispose();
