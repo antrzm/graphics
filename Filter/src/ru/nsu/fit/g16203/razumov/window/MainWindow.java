@@ -140,13 +140,13 @@ public class MainWindow extends MainFrame {
     }
 
     public void onFS() {
-        JFrame frame = new JFrame("RGB");
-        frame.setPreferredSize(new Dimension(250,150));
+        JDialog frame = new JDialog(this, "RGB", true);
+        frame.setPreferredSize(new Dimension(250, 150));
         frame.setResizable(false);
-        JPanel panel = new JPanel(new FlowLayout());
+        JPanel panel = new JPanel(new GridLayout(1, 2));
 
-        JPanel fields = new JPanel(new GridLayout(3, 2, 10, 10));
-        JPanel buttons = new JPanel();
+        JPanel fields = new JPanel(new GridLayout(3, 2));
+        JPanel button = new JPanel();
 
         JLabel rLabel = new JLabel("R:");
         JLabel gLabel = new JLabel("G:");
@@ -169,23 +169,22 @@ public class MainWindow extends MainFrame {
         fields.add(bLabel);
         fields.add(bField);
 
-        buttons.add(okButton);
+        button.add(okButton);
 
         panel.add(fields);
-        panel.add(buttons);
+        panel.add(button);
 
         okButton.addActionListener(e -> {
-
-            int r,g,b;
+            int r, g, b;
             try {
                 r = Integer.parseInt(rField.getText());
                 g = Integer.parseInt(gField.getText());
                 b = Integer.parseInt(bField.getText());
-            } catch (NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 r = g = b = 2;
             }
 
-            imageZones.applyFilter(new FloydDithering(r,g,b));
+            imageZones.applyFilter(new FloydDithering(r, g, b));
 
             frame.setVisible(false);
             frame.dispose();
@@ -246,19 +245,56 @@ public class MainWindow extends MainFrame {
     }
 
     public void onGamma() {
-        JDialog gammaDialog = new JDialog(this, "Enter coefficient", true);
-        JPanel panel = new JPanel(new GridLayout(2, 1));
-        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
-        panel.add(new JLabel("Gamma coefficient", SwingConstants.CENTER));
-        panel.add(valueSlider);
-        valueSlider.addChangeListener(e -> imageZones.applyFilter(new Gamma(((JSlider) e.getSource()).getValue())));
+        JDialog frame = new JDialog(this, "Choose gamma", true);
+        JPanel panel = new JPanel(new GridLayout(3, 1));
+        JPanel valuePanel = new JPanel(new GridLayout(2, 2));
+        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, 0);
+        JTextField valueField = new JTextField(0);
+        valueField.setText("0");
+        valuePanel.add(valueSlider);
+        valuePanel.add(valueField);
 
-        gammaDialog.add(panel);
-        gammaDialog.setPreferredSize(new Dimension(200, 100));
-        gammaDialog.setResizable(false);
-        gammaDialog.pack();
-        gammaDialog.setLocationRelativeTo(this);
-        gammaDialog.setVisible(true);
+        valueSlider.addChangeListener(e -> {
+            int val = ((JSlider) e.getSource()).getValue();
+            valueField.setText(String.valueOf(val));
+        });
+        valueField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!valueField.getText().isEmpty())
+                    try {
+                        valueSlider.setValue(Integer.parseInt(valueField.getText()));
+                    }catch (NumberFormatException ex){
+                        valueSlider.setValue(0);
+                    }
+            }
+        });
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> {
+            int val;
+            try {
+                val = Integer.parseInt(valueField.getText());
+            } catch (NumberFormatException ex) {
+                val = 0;
+            }
+
+            imageZones.applyFilter(new Gamma(val));
+
+            frame.setVisible(false);
+            frame.dispose();
+        });
+
+        valuePanel.add(okButton);
+        panel.add(new JLabel("Gamma", SwingConstants.CENTER));
+        panel.add(valuePanel);
+
+        frame.add(panel);
+        frame.setPreferredSize(new Dimension(200, 200));
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
     }
 
     public void onGauss() {
@@ -277,23 +313,36 @@ public class MainWindow extends MainFrame {
         String title = (isSobel ? "Sobel" : "Roberts") + " threshold";
         JDialog thresholdDialog = new JDialog(this, title, true);
         JPanel panel = new JPanel(new GridLayout(2, 1));
-        JPanel valuePanel = new JPanel(new GridLayout(1, 2));
+        JPanel valuePanel = new JPanel(new GridLayout(2, 2));
         JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 1, 500, 100);
         JTextField valueField = new JTextField(0);
         valueField.setText("100");
         valuePanel.add(valueSlider);
         valuePanel.add(valueField);
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> {
+            int val;
+            try {
+                val = Integer.parseInt(valueField.getText());
+                if (isSobel) imageZones.applyFilter(new Sobel(val));
+                else imageZones.applyFilter(new Roberts(val));
+            } catch (NumberFormatException ignored) {
+            }
+
+            thresholdDialog.setVisible(false);
+            thresholdDialog.dispose();
+        });
+
+        valuePanel.add(okButton);
+
         panel.add(new JLabel("Threshold", SwingConstants.CENTER));
         panel.add(valuePanel);
         valueSlider.addChangeListener(e -> {
             try {
                 int val = ((JSlider) e.getSource()).getValue();
                 valueField.setText(String.valueOf(val));
-                if (isSobel) imageZones.applyFilter(new Sobel(val));
-                else imageZones.applyFilter(new Roberts(val));
-            } catch (NumberFormatException ex) {
-                if (isSobel) imageZones.applyFilter(new Sobel(200));
-                else imageZones.applyFilter(new Roberts(50));
+            } catch (NumberFormatException ignored) {
             }
         });
         valueField.addKeyListener(new KeyAdapter() {
@@ -305,7 +354,7 @@ public class MainWindow extends MainFrame {
         });
 
         thresholdDialog.add(panel);
-        thresholdDialog.setPreferredSize(new Dimension(200, 100));
+        thresholdDialog.setPreferredSize(new Dimension(200, 200));
         thresholdDialog.setResizable(false);
         thresholdDialog.pack();
         thresholdDialog.setLocationRelativeTo(this);
@@ -325,16 +374,15 @@ public class MainWindow extends MainFrame {
     }
 
     public void onRotate() {
-        JDialog rotateDialog = new JDialog(this, "Choose angle", true);
-        JPanel panel = new JPanel(new GridLayout(2, 1));
-        JPanel valuePanel = new JPanel(new GridLayout(1, 2));
+        JDialog frame = new JDialog(this, "Choose angle", true);
+        JPanel panel = new JPanel(new GridLayout(3, 1));
+        JPanel valuePanel = new JPanel(new GridLayout(2, 2));
         JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, -180, 180, 0);
         JTextField valueField = new JTextField(0);
         valueField.setText("0");
         valuePanel.add(valueSlider);
         valuePanel.add(valueField);
-        panel.add(new JLabel("Angle", SwingConstants.CENTER));
-        panel.add(valuePanel);
+
         valueSlider.addChangeListener(e -> {
             int val = ((JSlider) e.getSource()).getValue();
             valueField.setText(String.valueOf(val));
@@ -344,16 +392,39 @@ public class MainWindow extends MainFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (!valueField.getText().isEmpty())
-                    valueSlider.setValue(Integer.parseInt(valueField.getText()));
+                    try {
+                        valueSlider.setValue(Integer.parseInt(valueField.getText()));
+                    }catch (NumberFormatException ex){
+                        valueSlider.setValue(0);
+                    }
             }
         });
 
-        rotateDialog.add(panel);
-        rotateDialog.setPreferredSize(new Dimension(200, 100));
-        rotateDialog.setResizable(false);
-        rotateDialog.pack();
-        rotateDialog.setLocationRelativeTo(this);
-        rotateDialog.setVisible(true);
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> {
+            int val;
+            try {
+                val = Integer.parseInt(valueField.getText());
+            } catch (NumberFormatException ex) {
+                val = 0;
+            }
+
+            imageZones.applyFilter(new Rotate(val));
+
+            frame.setVisible(false);
+            frame.dispose();
+        });
+
+        valuePanel.add(okButton);
+        panel.add(new JLabel("Angle", SwingConstants.CENTER));
+        panel.add(valuePanel);
+
+        frame.add(panel);
+        frame.setPreferredSize(new Dimension(200, 200));
+        frame.setResizable(false);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
     }
 
     public void onToolBar() {

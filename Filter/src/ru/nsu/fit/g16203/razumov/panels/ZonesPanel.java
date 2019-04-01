@@ -73,7 +73,7 @@ public class ZonesPanel extends JPanel {
             BufferedImage image = filter.Apply(zoneB.getImage());
             zoneC.setImage(image);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Open an image first", "No image", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Firstly, put an image in zone B using Select", "No image", JOptionPane.WARNING_MESSAGE);
         }
     }
 

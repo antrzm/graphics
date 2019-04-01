@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
         if (icon != null)
-            item.setIcon(new ImageIcon(("src/resources/" + icon), title));
+            item.setIcon(new ImageIcon(getClass().getResource("../resources/" + icon), title));
         final Method method = getClass().getMethod(actionMethod);
         item.addActionListener(evt -> {
             try {
@@ -149,7 +149,7 @@ public class MainFrame extends JFrame {
     public JButton createToolBarButton(JMenuItem item, String icon) {
         Icon iconForButton = item.getIcon();
         if (iconForButton == null && icon != null)
-            iconForButton = new ImageIcon(("src/resources/" + icon));
+            iconForButton = new ImageIcon(getClass().getResource("../resources/" + icon));
         JButton button =new JButton(iconForButton);
         for (ActionListener listener : item.getActionListeners())
             button.addActionListener(listener);
