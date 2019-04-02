@@ -2,6 +2,7 @@ package ru.nsu.fit.g16203.razumov.window;
 
 import ru.nsu.fit.g16203.razumov.filters.*;
 import ru.nsu.fit.g16203.razumov.panels.ZonesPanel;
+import ru.nsu.fit.g16203.razumov.volume.Cube;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.Objects;
+import java.util.Vector;
 
 public class MainWindow extends MainFrame {
     private ZonesPanel imageZones;
@@ -20,7 +22,11 @@ public class MainWindow extends MainFrame {
     private JLabel status;
     private File dataDirectory;
 
-    private int angle = 0, r = 2, g = 2, b = 2, gamma = 0, sobel = 100, roberts = 50;
+    private int angle = 0, r = 2, g = 2, b = 2, gamma = 0, sobel = 100, roberts = 50, x = 350, y = 350, z = 350;
+
+    private JButton selectButton, renderButton;
+
+    private Vector<JButton> filterButtons = new Vector<>();
 
     public MainWindow() {
         super(1200, 500, "Filter");
@@ -63,6 +69,12 @@ public class MainWindow extends MainFrame {
             addMenuItem("View/Zoom", "Zoom in", KeyEvent.VK_Z, "onZoom");
             addMenuItem("View/Rotate", "Rotate", KeyEvent.VK_R, "onRotate");
 
+            addSubMenu("Volume", KeyEvent.VK_R);
+            addMenuItem("Volume/Open config", "Open config file", KeyEvent.VK_O, "onConfig");
+            addMenuItem("Volume/Absorption", "Absorption", KeyEvent.VK_A, "onAbsorption");
+            addMenuItem("Volume/Emission", "Emission", KeyEvent.VK_E, "onEmission");
+            addMenuItem("Volume/Render", "Render volume", KeyEvent.VK_R, "onRender");
+
             addSubMenu("Help", KeyEvent.VK_H);
             addMenuItem("Help/About...", "Program info", KeyEvent.VK_A, "onAbout");
         } catch (NoSuchMethodException e) {
@@ -75,26 +87,36 @@ public class MainWindow extends MainFrame {
         addToolBarButton("File/Open...", "Open.png");
         addToolBarButton("File/Save as...", "Save.png");
         addToolBarSeparator();
-        addToolBarButton("Edit/Select", "Select.png");
-        addToolBarButton("Edit/Invert", "Invert.png");
-        addToolBarButton("Edit/Black & white", "BlackWhite.png");
-        addToolBarButton("Edit/Floyd-Steinberg", "Floyd.png");
-        addToolBarButton("Edit/Ordered dithering", "Ordered.png");
-        addToolBarButton("Edit/Sharpen", "Sharpen.png");
-        addToolBarButton("Edit/Stamping", "Stamping.png");
-        addToolBarButton("Edit/WaterColor", "Water.png");
-        addToolBarButton("Edit/Gamma", "Gamma.png");
-        addToolBarButton("Edit/Gauss", "Gauss.png");
-        addToolBarButton("Edit/Sobel", "Sobel.png");
-        addToolBarButton("Edit/Roberts", "Roberts.png");
+        selectButton = addToolBarButton("Edit/Select", "Select.png");
+        filterButtons.add(addToolBarButton("Edit/Invert", "Invert.png"));
+        filterButtons.add(addToolBarButton("Edit/Black & white", "BlackWhite.png"));
+        filterButtons.add(addToolBarButton("Edit/Floyd-Steinberg", "Floyd.png"));
+        filterButtons.add(addToolBarButton("Edit/Ordered dithering", "Ordered.png"));
+        filterButtons.add(addToolBarButton("Edit/Sharpen", "Sharpen.png"));
+        filterButtons.add(addToolBarButton("Edit/Stamping", "Stamping.png"));
+        filterButtons.add(addToolBarButton("Edit/WaterColor", "Water.png"));
+        filterButtons.add(addToolBarButton("Edit/Gamma", "Gamma.png"));
+        filterButtons.add(addToolBarButton("Edit/Gauss", "Gauss.png"));
+        filterButtons.add(addToolBarButton("Edit/Sobel", "Sobel.png"));
+        filterButtons.add(addToolBarButton("Edit/Roberts", "Roberts.png"));
         addToolBarSeparator();
-        addToolBarButton("View/C --> B", "CtoB.png");
-        addToolBarButton("View/B --> C", "BtoC.png");
-        addToolBarButton("View/Zoom", "Zoom.png");
-        addToolBarButton("View/Rotate", "Rotate.png");
+        filterButtons.add(addToolBarButton("View/C --> B", "CtoB.png"));
+        filterButtons.add(addToolBarButton("View/B --> C", "BtoC.png"));
+        filterButtons.add(addToolBarButton("View/Zoom", "Zoom.png"));
+        filterButtons.add(addToolBarButton("View/Rotate", "Rotate.png"));
+        addToolBarSeparator();
+        addToolBarButton("Volume/Open config", "Config.png");
+        addToolBarButton("Volume/Absorption", "Absorption.png");
+        addToolBarButton("Volume/Emission", "Emission.png");
+        renderButton = addToolBarButton("Volume/Render", "Render.png");
         addToolBarSeparator();
         addToolBarButton("Help/About...", "About.png");
         //endregion
+
+        selectButton.setEnabled(false);
+        renderButton.setEnabled(false);
+        for (JButton btn : filterButtons)
+            btn.setEnabled(false);
 
         JScrollPane scrollPane = new JScrollPane(imageZones);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -107,6 +129,9 @@ public class MainWindow extends MainFrame {
 
     public void onNew() {
         imageZones.clearZones();
+        selectButton.setEnabled(false);
+        for (JButton btn : filterButtons)
+            btn.setEnabled(false);
     }
 
     public void onOpen() {
@@ -128,6 +153,8 @@ public class MainWindow extends MainFrame {
     public void onSelect() {
         if (!imageZones.getZoneA().isSelectShown()) imageZones.getZoneA().setSelectShown(true);
         else imageZones.getZoneA().setSelectShown(false);
+
+        for (JButton btn : filterButtons) btn.setEnabled(true);
     }
 
     public void onInvert() {
@@ -414,6 +441,77 @@ public class MainWindow extends MainFrame {
             this.statusBar.setVisible(true);
     }
 
+    public void onConfig() {    //TODO
+        //...........//
+        renderButton.setEnabled(true);  //after success
+    }
+
+    public void onAbsorption() {
+    }   //TODO
+
+    public void onEmission() {      //TODO
+    }
+
+    public void onRender() {
+        JDialog frame = new JDialog(this, "VR params", true);
+        frame.setPreferredSize(new Dimension(250, 150));
+        frame.setResizable(false);
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+
+        JPanel fields = new JPanel(new GridLayout(3, 2));
+        JPanel button = new JPanel();
+
+        JLabel xLabel = new JLabel("X:");
+        JLabel yLabel = new JLabel("Y:");
+        JLabel zLabel = new JLabel("Z:");
+
+        JTextField xField = new JTextField();
+        JTextField yField = new JTextField();
+        JTextField zField = new JTextField();
+
+        xField.setText(String.valueOf(x));
+        yField.setText(String.valueOf(y));
+        zField.setText(String.valueOf(z));
+
+        JToggleButton okButton = new JToggleButton("OK");
+
+        fields.add(xLabel);
+        fields.add(xField);
+        fields.add(yLabel);
+        fields.add(yField);
+        fields.add(zLabel);
+        fields.add(zField);
+
+        button.add(okButton);
+
+        panel.add(fields);
+        panel.add(button);
+
+        okButton.addActionListener(e -> {
+            try {
+                x = Integer.parseInt(xField.getText());
+                y = Integer.parseInt(yField.getText());
+                z = Integer.parseInt(zField.getText());
+                if (x > 350 || y > 350 || z > 350 || x < 1 || y < 1 || z < 1) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Values should be numbers between 1 and 350", "Wrong input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Cube cube = new Cube(x, y, z);
+            cube.startRendering();  //TODO;
+            frame.setVisible(false);
+            frame.dispose();
+        });
+
+        frame.add(panel);
+        frame.pack();
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+    }
+
     public void onAbout() {
         JOptionPane.showMessageDialog(this, "Init, version 1.0\nCopyright (c) 2019 Anton Razumov, FIT, group 16203", "About Init", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -456,6 +554,7 @@ public class MainWindow extends MainFrame {
         } catch (IOException e) {
             loadFile();
         }
+        selectButton.setEnabled(true);
     }
 
     /*Based on same name method from project from nsucgcourse.github.io*/

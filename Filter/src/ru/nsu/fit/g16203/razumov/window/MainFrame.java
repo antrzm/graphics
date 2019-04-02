@@ -126,7 +126,7 @@ public class MainFrame extends JFrame {
             return menuBar;
     }
 
-    private MenuElement getMenuElement(String menuPath) {
+    MenuElement getMenuElement(String menuPath) {
         MenuElement element = menuBar;
         for (String pathElement : menuPath.split("/")) {
             MenuElement newElement = null;
@@ -150,7 +150,7 @@ public class MainFrame extends JFrame {
         Icon iconForButton = item.getIcon();
         if (iconForButton == null && icon != null)
             iconForButton = new ImageIcon(getClass().getResource("../resources/" + icon));
-        JButton button =new JButton(iconForButton);
+        JButton button = new JButton(iconForButton);
         for (ActionListener listener : item.getActionListeners())
             button.addActionListener(listener);
         button.setToolTipText(item.getToolTipText());
@@ -164,8 +164,10 @@ public class MainFrame extends JFrame {
         return createToolBarButton(item, icon);
     }
 
-    protected void addToolBarButton(String menuPath, String icon) {
-        toolBar.add(createToolBarButton(menuPath, icon));
+    protected JButton addToolBarButton(String menuPath, String icon) {
+        JButton toolBarButton = createToolBarButton(menuPath, icon);
+        toolBar.add(toolBarButton);
+        return toolBarButton;
     }
 
     public void addToolBarButton(String menuPath) {
