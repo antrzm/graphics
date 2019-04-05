@@ -1,8 +1,11 @@
 package ru.nsu.fit.g16203.razumov.window;
 
+import javafx.util.Pair;
 import ru.nsu.fit.g16203.razumov.filters.*;
+import ru.nsu.fit.g16203.razumov.panels.GraphicsPanel;
 import ru.nsu.fit.g16203.razumov.panels.ZonesPanel;
-import ru.nsu.fit.g16203.razumov.volume.Cube;
+import ru.nsu.fit.g16203.razumov.volume.VolumeRendering;
+import ru.nsu.fit.g16203.razumov.volume.CubeElement;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -15,6 +18,7 @@ import java.util.Vector;
 
 public class MainWindow extends MainFrame {
     private ZonesPanel imageZones;
+    private GraphicsPanel graphicsPanel;
 
     private static final String READY = "Ready", PAUSED = "Paused", RUNNING = "Running...";     //status bar values
 
@@ -22,16 +26,24 @@ public class MainWindow extends MainFrame {
     private JLabel status;
     private File dataDirectory;
 
-    private int angle = 0, r = 2, g = 2, b = 2, gamma = 0, sobel = 100, roberts = 50, x = 350, y = 350, z = 350;
+    private boolean isOpened;
+
+    private int angle = 0, r = 2, g = 2, b = 2, sobel = 100, roberts = 50, x = 350, y = 350, z = 350;
+    private double gamma = 1.0;
 
     private JButton selectButton, renderButton;
-
+    private JToggleButton absButton, emisButton;
     private Vector<JButton> filterButtons = new Vector<>();
+
+    private VolumeRendering volumeRendering = new VolumeRendering();
 
     public MainWindow() {
         super(1200, 500, "Filter");
         imageZones = new ZonesPanel();
+        graphicsPanel = new GraphicsPanel();
         statusBar = new JPanel();
+
+        this.isOpened = false;
 
         statusBar = new JPanel();
         status = new JLabel(READY);
@@ -106,13 +118,16 @@ public class MainWindow extends MainFrame {
         filterButtons.add(addToolBarButton("View/Rotate", "Rotate.png"));
         addToolBarSeparator();
         addToolBarButton("Volume/Open config", "Config.png");
-        addToolBarButton("Volume/Absorption", "Absorption.png");
-        addToolBarButton("Volume/Emission", "Emission.png");
+        absButton = addToolBarToggleButton("Volume/Absorption", "Absorption.png");
+        emisButton = addToolBarToggleButton("Volume/Emission", "Emission.png");
         renderButton = addToolBarButton("Volume/Render", "Render.png");
         addToolBarSeparator();
         addToolBarButton("Help/About...", "About.png");
         //endregion
 
+        //disabling buttons before image is opened
+        emisButton.setEnabled(false);
+        absButton.setEnabled(false);
         selectButton.setEnabled(false);
         renderButton.setEnabled(false);
         for (JButton btn : filterButtons)
@@ -132,6 +147,7 @@ public class MainWindow extends MainFrame {
         selectButton.setEnabled(false);
         for (JButton btn : filterButtons)
             btn.setEnabled(false);
+        this.isOpened = false;
     }
 
     public void onOpen() {
@@ -139,7 +155,11 @@ public class MainWindow extends MainFrame {
             loadFile();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "File format is unfamiliar", "Wrong file", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        this.isOpened = true;
+        this.graphicsPanel.drawGraphics();
+        this.repaint();
     }
 
     public void onSaveAs() {
@@ -241,7 +261,7 @@ public class MainWindow extends MainFrame {
         JDialog frame = new JDialog(this, "Choose gamma", true);
         JPanel panel = new JPanel(new GridLayout(3, 1));
         JPanel valuePanel = new JPanel(new GridLayout(2, 2));
-        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, gamma);
+        JSlider valueSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int) (gamma * 10));
         JTextField valueField = new JTextField(0);
         valueField.setText(String.valueOf(gamma));
         valuePanel.add(valueSlider);
@@ -249,16 +269,16 @@ public class MainWindow extends MainFrame {
 
         valueSlider.addChangeListener(e -> {
             int val = ((JSlider) e.getSource()).getValue();
-            valueField.setText(String.valueOf(val));
+            valueField.setText(String.valueOf(val / 10.0));
         });
         valueField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (!valueField.getText().isEmpty())
                     try {
-                        valueSlider.setValue(Integer.parseInt(valueField.getText()));
+                        valueSlider.setValue((int) (Double.parseDouble(valueField.getText()) * 10));
                     } catch (NumberFormatException ex) {
-                        valueSlider.setValue(0);
+                        valueSlider.setValue(10);
                     }
             }
         });
@@ -266,9 +286,9 @@ public class MainWindow extends MainFrame {
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> {
             try {
-                gamma = Integer.parseInt(valueField.getText());
+                gamma = Double.parseDouble(valueField.getText());
             } catch (NumberFormatException ex) {
-                gamma = 0;
+                gamma = 1.0;
             }
 
             imageZones.applyFilter(new Gamma(gamma));
@@ -441,15 +461,29 @@ public class MainWindow extends MainFrame {
             this.statusBar.setVisible(true);
     }
 
-    public void onConfig() {    //TODO
-        //...........//
+    public void onConfig() {
+        loadConfig();
         renderButton.setEnabled(true);  //after success
     }
 
     public void onAbsorption() {
-    }   //TODO
+        if (volumeRendering.isAbs()) {
+            absButton.setSelected(false);
+            volumeRendering.setAbs(false);
+        } else {
+            absButton.setSelected(true);
+            volumeRendering.setAbs(true);
+        }
+    }
 
-    public void onEmission() {      //TODO
+    public void onEmission() {
+        if (volumeRendering.isEmis()) {
+            volumeRendering.setEmis(false);
+            emisButton.setSelected(false);
+        } else {
+            emisButton.setSelected(true);
+            volumeRendering.setEmis(true);
+        }
     }
 
     public void onRender() {
@@ -473,7 +507,7 @@ public class MainWindow extends MainFrame {
         yField.setText(String.valueOf(y));
         zField.setText(String.valueOf(z));
 
-        JToggleButton okButton = new JToggleButton("OK");
+        JButton okButton = new JButton("OK");
 
         fields.add(xLabel);
         fields.add(xField);
@@ -500,10 +534,10 @@ public class MainWindow extends MainFrame {
                 return;
             }
 
-            Cube cube = new Cube(x, y, z);
-            cube.startRendering();  //TODO;
             frame.setVisible(false);
             frame.dispose();
+            volumeRendering.setBounds(x, y, z);
+            imageZones.applyFilter(volumeRendering);
         });
 
         frame.add(panel);
@@ -572,5 +606,83 @@ public class MainWindow extends MainFrame {
         return dataDirectory;
     }
 
+    private void loadConfig() {
+        String line;
+        Vector<Double> params = new Vector<>();
+        int i = 0;
+
+        int absVerticesNum, emisVerticesNum, chargeVerticesNum;
+        Vector<Pair<Integer, Double>> absVertices;
+        Vector<Pair<Integer, Color>> emisVertices;
+        Vector<CubeElement> chargeVertices;
+        absVertices = new Vector<>();
+        emisVertices = new Vector<>();
+        chargeVertices = new Vector<>();
+
+        File file;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(getDataDirectory());
+
+        int ret = fileChooser.showOpenDialog(this);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            file = fileChooser.getSelectedFile();
+            dataDirectory = file;
+        } else return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("/")) {
+                    line = line.substring(0, line.indexOf("/"));
+                }
+
+                String[] split = line.split(" ");
+                for (String s : split) {
+                    if (!s.equals(""))
+                        params.add(Double.parseDouble(s));
+                    i++;
+                }
+            }
+
+            absVerticesNum = (int) Math.round(params.elementAt(0)) * 2;
+            for (int j = 0; j < absVerticesNum; j += 2)
+                absVertices.add(new Pair<>((int) Math.round(params.elementAt(1 + j)), params.elementAt(2 + j)));
+
+            emisVerticesNum = (int) Math.round(params.elementAt(1 + absVerticesNum)) * 4;
+            for (int j = 0; j < emisVerticesNum; j += 4)
+                emisVertices.add(new Pair<>(
+                        (int) Math.round(params.elementAt(2 + absVerticesNum + j)),
+                        new Color(
+                                (int) Math.round(params.elementAt(3 + absVerticesNum + j)),
+                                (int) Math.round(params.elementAt(4 + absVerticesNum + j)),
+                                (int) Math.round(params.elementAt(5 + absVerticesNum + j))
+                        )
+                ));
+
+            chargeVerticesNum = (int) Math.round(params.elementAt(2 + absVerticesNum + emisVerticesNum)) * 4;
+            for (int j = 0; j < chargeVerticesNum; j += 4)
+                chargeVertices.add(new CubeElement(
+                        params.elementAt(3 + absVerticesNum + emisVerticesNum + j),
+                        params.elementAt(4 + absVerticesNum + emisVerticesNum + j),
+                        params.elementAt(5 + absVerticesNum + emisVerticesNum + j),
+                        params.elementAt(6 + absVerticesNum + emisVerticesNum + j)
+                ));
+
+
+            imageZones.add(graphicsPanel);
+            pack();
+            volumeRendering.setCharges(chargeVertices);
+            volumeRendering.setAbsVertices(absVertices);
+            volumeRendering.setEmisVertices(emisVertices);
+            graphicsPanel.setAbsorptionVertices(absVertices);
+            graphicsPanel.setEmissionVertices(emisVertices);
+            if (isOpened) graphicsPanel.drawGraphics();
+            emisButton.setEnabled(true);
+            absButton.setEnabled(true);
+            this.onAbsorption();
+            this.onEmission();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Wrong file format", "Wrong file", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 }

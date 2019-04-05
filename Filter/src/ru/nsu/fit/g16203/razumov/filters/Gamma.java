@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Gamma implements Filter {
 
-    public int coef;
+    private double coef;
 
-    public Gamma(int coef){
+    public Gamma(double coef){
         this.coef = coef;
     }
 

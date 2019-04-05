@@ -157,6 +157,17 @@ public class MainFrame extends JFrame {
         return button;
     }
 
+    public JToggleButton createToolBarToggleButton(JMenuItem item, String icon) {
+        Icon iconForButton = item.getIcon();
+        if (iconForButton == null && icon != null)
+            iconForButton = new ImageIcon(getClass().getResource("../resources/" + icon));
+        JToggleButton button = new JToggleButton(iconForButton);
+        for (ActionListener listener : item.getActionListeners())
+            button.addActionListener(listener);
+        button.setToolTipText(item.getToolTipText());
+        return button;
+    }
+
     private JButton createToolBarButton(String menuPath, String icon) {
         JMenuItem item = (JMenuItem) getMenuElement(menuPath);
         if (item == null)
@@ -164,8 +175,21 @@ public class MainFrame extends JFrame {
         return createToolBarButton(item, icon);
     }
 
+    private JToggleButton createToolBarToggleButton(String menuPath, String icon) {
+        JMenuItem item = (JMenuItem) getMenuElement(menuPath);
+        if (item == null)
+            throw new InvalidParameterException("Menu path not found: " + menuPath);
+        return createToolBarToggleButton(item, icon);
+    }
+
     protected JButton addToolBarButton(String menuPath, String icon) {
         JButton toolBarButton = createToolBarButton(menuPath, icon);
+        toolBar.add(toolBarButton);
+        return toolBarButton;
+    }
+
+    protected JToggleButton addToolBarToggleButton(String menuPath, String icon) {
+        JToggleButton toolBarButton = createToolBarToggleButton(menuPath, icon);
         toolBar.add(toolBarButton);
         return toolBarButton;
     }

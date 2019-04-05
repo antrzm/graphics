@@ -17,6 +17,9 @@ public class ZonesPanel extends JPanel {
     private JPanel selectZone;
 
     public ZonesPanel() {
+        this.setLayout(new FlowLayout());
+        this.setPreferredSize(new Dimension(1200,500));
+
         zoneA = new ImagePanel();
         zoneB = new ImagePanel();
         zoneC = new ImagePanel();
