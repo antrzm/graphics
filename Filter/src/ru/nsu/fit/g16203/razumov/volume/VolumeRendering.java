@@ -27,36 +27,31 @@ public class VolumeRendering implements Filter {
 
     @Override
     public BufferedImage Apply(BufferedImage src) {
-        if (!isAbs && !isEmis) return src;
-
-        findMinMax();
-
+        if (isAbs || isEmis) findMinMax();
+        else return src;
         int srcHeight = src.getHeight();
         int srcWidth = src.getWidth();
 
         BufferedImage dst = new BufferedImage(srcWidth, srcHeight, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < dst.getWidth(); i++)
-            for (int j = 0; j < dst.getHeight(); j++)
-                dst.setRGB(i, j, Color.CYAN.getRGB());          //background for checking
 
         double scaleX = (double) srcHeight / Nx, scaleY = (double) srcWidth / Ny;
 
-        for (int x = 0; x < Nx; x++) {
-            for (int y = 0; y < Ny; y++) {
+        for (int i = 0; i < Nx; i++) {
+            for (int j = 0; j < Ny; j++) {
 
                 Vector<Double> zCharges = new Vector<>();
-                for (int z = 0; z < Nz; z++) {
+                for (int k = 0; k < Nz; k++) {
                     zCharges.add(getVoxelInfluence(
-                            x * (1.0 / Nx) + (1.0 / Nx) / 2.0,
-                            y * (1.0 / Ny) + (1.0 / Ny) / 2.0,
-                            z * (1.0 / Nz) + (1.0 / Nz) / 2.0
+                            i * (1.0 / Nx) + (1.0 / Nx) / 2.0,
+                            j * (1.0 / Ny) + (1.0 / Ny) / 2.0,
+                            k * (1.0 / Nz) + (1.0 / Nz) / 2.0
                     ));
                 }
-                int leftX = (int) (scaleX * x), rightX = (int) (leftX + scaleX);
-                int leftY = (int) (scaleY * y), rightY = (int) (leftY + scaleY);
-                for (int i = leftX; i < rightX && i < srcWidth; i++) {
-                    for (int j = leftY; j < rightY && j < srcHeight; j++) {
-                        Color prev = new Color(src.getRGB(i, j));
+                int leftX = (int) Math.round(scaleX * i), rightX = (int) Math.round(scaleX * i + scaleX);
+                int leftY = (int) Math.round(scaleY * j), rightY = (int) Math.round(scaleY * j + scaleY);
+                for (int x = leftX; x < rightX && x < srcWidth; x++) {
+                    for (int y = leftY; y < rightY && y < srcHeight; y++) {
+                        Color prev = new Color(src.getRGB(x, y));
                         double red = prev.getRed();
                         double green = prev.getGreen();
                         double blue = prev.getBlue();
@@ -68,20 +63,19 @@ public class VolumeRendering implements Filter {
                                 blue *= exp;
                             }
                             if (isEmis) {
-                                int newRgb = getEmission(zCharges.elementAt(z));
-                                Color color = new Color(newRgb);
-                                if (newRgb != 0) {
+                                Color color = getEmission(zCharges.elementAt(z));
+                                if (color != null) {
                                     red += color.getRed() * 1.0 / Nz;
                                     green += color.getGreen() * 1.0 / Nz;
                                     blue += color.getBlue() * 1.0 / Nz;
-                                }
+                                } else System.out.println("Color is null, value is " + zCharges.elementAt(z));
                             }
                         }
                         int r = Filter.normalizeColor((int) Math.round(red));
                         int g = Filter.normalizeColor((int) Math.round(green));
                         int b = Filter.normalizeColor((int) Math.round(blue));
                         int newRGB = ((r << 16) | (g << 8) | b);
-                        dst.setRGB(i, j, newRGB);
+                        dst.setRGB(x, y, newRGB);
                     }
                 }
             }
@@ -106,7 +100,7 @@ public class VolumeRendering implements Filter {
         Pair<Integer, Double> prev = iterator.next();
         while (iterator.hasNext()) {
             Pair<Integer, Double> next = iterator.next();
-            if (prev.getKey() < val && val < next.getKey()) {
+            if (prev.getKey() <= val && val <= next.getKey()) {
                 int x1 = prev.getKey(), x2 = next.getKey();
                 double fx1 = prev.getValue(), fx2 = next.getValue();
                 return fx1 - (fx1 - fx2) * (val - x1) / (x2 - x1);      //X = f(X1)-( f(X1) - f(X2) )*(X - X1)/(X2 - X1)
@@ -116,14 +110,14 @@ public class VolumeRendering implements Filter {
         return 0;
     }
 
-    private int getEmission(double v) {
+    private Color getEmission(double v) {
         int val = (int) ((v - min) * 100.0 / (max - min));
         val = val > 100 ? 100 : val < 0 ? 0 : val;
         Iterator<Pair<Integer, Color>> iterator = emisVertices.iterator();
         Pair<Integer, Color> prev = iterator.next();
         while (iterator.hasNext()) {
             Pair<Integer, Color> next = iterator.next();
-            if (prev.getKey() < val && val < next.getKey()) {
+            if (prev.getKey() <= val && val <= next.getKey()) {
                 int x1 = prev.getKey(), x2 = next.getKey();
                 Color prevCol = prev.getValue();
                 Color nextCol = next.getValue();
@@ -133,11 +127,11 @@ public class VolumeRendering implements Filter {
                 int newR = Filter.normalizeColor((int) r);
                 int newG = Filter.normalizeColor((int) g);
                 int newB = Filter.normalizeColor((int) b);
-                return ((newR << 16) | (newG << 8) | newB);
+                return new Color((newR << 16) | (newG << 8) | newB);
             }
             prev = next;
         }
-        return 0;
+        return null;
     }
 
     private void findMinMax() {
@@ -150,8 +144,6 @@ public class VolumeRendering implements Filter {
                     if (influence < min) min = influence;
                 }
         }
-        System.out.println("max: " + max);
-        System.out.println("min: " + min);
     }
 
     private double getVoxelInfluence(double i, double j, double k) {
