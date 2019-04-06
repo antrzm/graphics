@@ -107,9 +107,9 @@ class Hexagon extends JPanel {
             bresenham(x1, y1, x2, y2);
             bresenham(x2, y2, x3, y3);
             bresenham(x3, y3, x4, y4);
-            bresenham(x4, y4, x5, y5);
-            bresenham(x5, y5, x6, y6);
-            bresenham(x6, y6, x1, y1);
+            bresenham(x5, y5, x4, y4);
+            bresenham(x6, y6, x5, y5);
+            bresenham(x6, y6 + 1, x1, y1);
         } else {
             Graphics2D g = (Graphics2D) this.imageGrid.getGraphics();
             g.setPaint(Color.BLACK);
@@ -138,9 +138,9 @@ class Hexagon extends JPanel {
             bresenham(x1, y1, x2, y2);
             bresenham(x2, y2, x3, y3);
             bresenham(x3, y3, x4, y4);
-            bresenham(x4, y4, x5, y5);
-            bresenham(x5, y5, x6, y6);
-            bresenham(x6, y6, x1, y1);
+            bresenham(x5, y5, x4, y4);
+            bresenham(x6, y6, x5, y5);
+            bresenham(x6, y6 + 1, x1, y1);
         } else {
             Graphics2D g = this.imageGrid.createGraphics();
             g.setPaint(Color.BLACK);
