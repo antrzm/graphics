@@ -19,7 +19,6 @@
 *.tar.gz
 *.rar
 *.exe
-*.pdf
 
 out/
 .idea/
